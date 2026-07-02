@@ -1,0 +1,51 @@
+<h1 class="title">{{ 'cars.list-title' | translate }}</h1>
+@if (store.loading()) {
+  <mat-spinner diameter="40"></mat-spinner>
+}
+@if (store.error()) {
+  <mat-error>{{ store.error() }}</mat-error>
+}
+<table mat-table [dataSource]="dataSource()" class="mat-elevation-z8" matSort matSortActive="brand" matSortDirection="asc" matSortDisableClear>
+
+  <ng-container matColumnDef="brand">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'cars.brand' | translate }}</th>
+    <td mat-cell *matCellDef="let car"> {{ car.brand }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="model">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'cars.model' | translate }}</th>
+    <td mat-cell *matCellDef="let car"> {{ car.model }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="year">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'cars.year' | translate }}</th>
+    <td mat-cell *matCellDef="let car"> {{ car.year }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="price">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'cars.price' | translate }}</th>
+    <td mat-cell *matCellDef="let car"> S/ {{ car.price | number }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="fuelType">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'cars.fuel-type' | translate }}</th>
+    <td mat-cell *matCellDef="let car"> {{ car.fuelType }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="transmission">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'cars.transmission' | translate }}</th>
+    <td mat-cell *matCellDef="let car"> {{ car.transmission }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="status">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'cars.status' | translate }}</th>
+    <td mat-cell *matCellDef="let car"> {{ car.status }} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+<button mat-raised-button color="primary" (click)="navigateToNew()">{{ 'cars.new' | translate }}</button>
