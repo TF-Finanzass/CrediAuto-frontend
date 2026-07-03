@@ -1,27 +1,49 @@
-<div class="form">
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>Sign-In</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <form [formGroup]="form" (submit)="performSignIn()">
-        <mat-form-field>
-          <input matInput placeholder="Username" id="username" name="username" required formControlName="username">
-          @if (isInvalidControl(form,'username')) {
-            <mat-error>{{ errorMessagesForControl(form,'username')}}</mat-error>
-          }
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput type="password" placeholder="Password" id="password" name="password" formControlName="password">
-          @if (isInvalidControl(form,'password')) {
-            <mat-error>{{ errorMessagesForControl(form,'password')}}</mat-error>
-          }
-        </mat-form-field>
-        <button mat-raised-button color="primary">Sign-In</button>
-      </form>
-      <p class="link-secundario">
-        ¿No tienes cuenta? <a routerLink="/sign-up">Regístrate</a>
-      </p>
-    </mat-card-content>
-  </mat-card>
-</div>
+<section class="sign-in-page" [class.seller]="selectedRole() === Role.Seller" [class.buyer]="selectedRole() === Role.Buyer">
+  <div class="sign-in-card">
+    <div class="brand-lockup">
+      <div class="brand-icon">
+        <mat-icon>directions_car</mat-icon>
+      </div>
+      <div class="brand-copy">
+        <h1>CrediAuto Portal</h1>
+        <span>Acceso al sistema financiero vehicular</span>
+      </div>
+    </div>
+
+    <mat-button-toggle-group class="role-switch" [value]="selectedRole()" aria-label="Tipo de usuario" (change)="selectRole($event.value)">
+      <mat-button-toggle [value]="Role.Seller">Vendedor</mat-button-toggle>
+      <mat-button-toggle [value]="Role.Buyer">Comprador</mat-button-toggle>
+    </mat-button-toggle-group>
+
+    <h2>{{ title }}</h2>
+    <p class="description">{{ description }}</p>
+
+    <mat-card>
+      <mat-card-content>
+        <form [formGroup]="form" (ngSubmit)="performSignIn()">
+          <mat-form-field appearance="outline">
+            <mat-label>Usuario</mat-label>
+            <input matInput placeholder="correo@ejemplo.com" id="username" name="username" required formControlName="username">
+            @if (isInvalidControl(form,'username')) {
+              <mat-error>{{ errorMessagesForControl(form,'username')}}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Contraseña</mat-label>
+            <input matInput type="password" placeholder="********" id="password" name="password" formControlName="password">
+            @if (isInvalidControl(form,'password')) {
+              <mat-error>{{ errorMessagesForControl(form,'password')}}</mat-error>
+            }
+          </mat-form-field>
+
+          <button mat-raised-button color="primary" type="submit">Iniciar sesión</button>
+        </form>
+      </mat-card-content>
+    </mat-card>
+
+    <p class="link-secundario">
+      {{ registerLabel }} <a routerLink="/sign-up">Crear cuenta</a>
+    </p>
+  </div>
+</section>

@@ -2,7 +2,6 @@ import {AfterViewChecked, Component, computed, inject, ViewChild} from '@angular
 import {Router} from '@angular/router';
 import {DecimalPipe} from '@angular/common';
 import {ClientsStore} from '../../../application/clients.store';
-import {MatError} from '@angular/material/form-field';
 import {
   MatCell, MatCellDef, MatColumnDef, MatHeaderCell, MatHeaderCellDef,
   MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef, MatTable, MatTableDataSource
@@ -17,7 +16,7 @@ import {MatIconModule} from '@angular/material/icon';
 @Component({
   selector: 'app-client-list',
   imports: [
-    MatError, MatTable, MatHeaderCellDef, MatCellDef, MatColumnDef,
+     MatTable, MatHeaderCellDef, MatCellDef, MatColumnDef,
     MatHeaderCell, MatCell, MatHeaderRowDef, MatRowDef, MatButton,
     MatHeaderRow, MatRow, MatProgressSpinner, TranslatePipe, MatSort,
     MatSortHeader, MatPaginator, DecimalPipe, MatIconModule
