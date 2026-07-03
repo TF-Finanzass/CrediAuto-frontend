@@ -1,1 +1,16 @@
-/* You can add global styles to this file, and also import other style files */
+.mat-mdc-select-panel {
+  background: #111c34 !important;
+}
+
+.mat-mdc-option {
+  color: #e2e8f0 !important;
+}
+
+.mat-mdc-option:hover:not(.mdc-list-item--disabled) {
+  background: #1e293b !important;
+}
+
+.mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled) {
+  background: #1d4ed8 !important;
+  color: #fff !important;
+}

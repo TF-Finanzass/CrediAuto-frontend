@@ -1,0 +1,25 @@
+export enum PaymentFrequency {
+  Mensual = 'Mensual',
+  Bimestral = 'Bimestral',
+  Trimestral = 'Trimestral',
+  Cuatrimestral = 'Cuatrimestral',
+  Semestral = 'Semestral',
+  Anual = 'Anual'
+}
+
+/** Número de pagos/capitalizaciones por año según la frecuencia. */
+export function periodsPerYear(frequency: PaymentFrequency): number {
+  const map: Record<PaymentFrequency, number> = {
+    [PaymentFrequency.Mensual]: 12,
+    [PaymentFrequency.Bimestral]: 6,
+    [PaymentFrequency.Trimestral]: 4,
+    [PaymentFrequency.Cuatrimestral]: 3,
+    [PaymentFrequency.Semestral]: 2,
+    [PaymentFrequency.Anual]: 1
+  };
+  return map[frequency];
+}
+
+export function monthsPerPeriod(frequency: PaymentFrequency): number {
+  return 12 / periodsPerYear(frequency);
+}

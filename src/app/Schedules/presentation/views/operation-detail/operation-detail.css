@@ -1,0 +1,50 @@
+.detalle { color: #e2e8f0; display: flex; flex-direction: column; gap: 4px; }
+
+.back-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  color: #94a3b8 !important;
+  border-color: #334155 !important;
+  margin-bottom: 12px;
+}
+
+.back-btn:hover {
+  color: #e2e8f0 !important;
+  border-color: #475569 !important;
+}
+
+.titulo { margin: 0; font-size: 22px; font-weight: 600; color: #f1f5f9; }
+.subtitulo { color: #94a3b8; margin: 0 0 16px; }
+
+.resumen {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px;
+}
+.resumen div {
+  background: #1e293b; border-radius: 8px; padding: 10px 14px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.resumen span { font-size: 11px; color: #94a3b8; }
+.resumen strong { font-size: 15px; color: #f1f5f9; }
+
+.tabla-card {
+  background: #0f172a;
+  border: 1px solid #1e293b;
+  border-radius: 12px;
+  padding: 8px 16px;
+  overflow-x: auto;
+}
+
+.tabla-cronograma { width: 100%; border-collapse: collapse; font-size: 12px; }
+.tabla-cronograma th, .tabla-cronograma td {
+  padding: 10px 8px; text-align: right; border-bottom: 1px solid #1e293b; color: #e2e8f0;
+}
+.tabla-cronograma th {
+  color: #94a3b8; font-weight: 600; text-transform: uppercase; font-size: 11px; letter-spacing: 0.03em;
+}
+.tabla-cronograma th:first-child, .tabla-cronograma td:first-child,
+.tabla-cronograma th:nth-child(2), .tabla-cronograma td:nth-child(2) { text-align: left; }
+.fila-gracia { color: #fbbf24; }
+
+.no-encontrado { color: #94a3b8; padding: 24px; }

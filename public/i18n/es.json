@@ -1,0 +1,68 @@
+{
+  "option": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "clients": "Clientes",
+    "vehicles": "Vehiculos",
+    "simulator": "Simulación",
+    "schedules": "Cronogramas",
+    "settings": "Configuración"
+  },
+  "cars": {
+    "list-title": "Catálogo de vehículos",
+    "count-label": "vehículos registrados",
+    "brand": "Marca",
+    "model": "Modelo",
+    "year": "Año",
+    "price": "Precio",
+    "fuel-type": "Combustible",
+    "transmission": "Transmisión",
+    "status": "Estado",
+    "new": "Nuevo vehículo"
+  },
+  "car": {
+    "new-title": "Registrar vehículo",
+    "brand": "Marca",
+    "model": "Modelo",
+    "year": "Año",
+    "price": "Precio",
+    "fuel-type": "Combustible",
+    "transmission": "Transmisión",
+    "detail": "Detalle",
+    "status": "Estado",
+    "create": "Registrar",
+    "back": "Volver",
+    "error": {
+      "brand-required": "La marca es obligatoria",
+      "model-required": "El modelo es obligatorio"
+    }
+  },
+  "clients": {
+    "list-title": "Clientes",
+    "count-label": "clientes registrados",
+    "full-name": "Nombres",
+    "last-name": "Apellidos",
+    "document": "Documento",
+    "email": "Correo",
+    "phone": "Teléfono",
+    "monthly-income": "Ingreso mensual",
+    "status": "Estado",
+    "new": "Nuevo cliente"
+  },
+  "client": {
+    "new-title": "Registrar cliente",
+    "full-name": "Nombres",
+    "last-name": "Apellidos",
+    "document": "Documento",
+    "email": "Correo",
+    "phone": "Teléfono",
+    "monthly-income": "Ingreso mensual",
+    "status": "Estado",
+    "create": "Registrar",
+    "back": "Volver",
+    "error": {
+      "full-name-required": "El nombre es obligatorio",
+      "email-invalid": "El correo no es válido"
+    }
+  }
+}

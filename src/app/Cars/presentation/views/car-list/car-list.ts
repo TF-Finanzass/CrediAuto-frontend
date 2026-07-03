@@ -12,6 +12,7 @@ import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {TranslatePipe} from '@ngx-translate/core';
 import {MatSort, MatSortHeader} from '@angular/material/sort';
 import {MatPaginator} from '@angular/material/paginator';
+import {MatIconModule} from '@angular/material/icon';
 
 /**
  * Component for displaying the car catalog with pagination and sorting, in the presentation layer of the 'cars' bounded context.
@@ -19,10 +20,10 @@ import {MatPaginator} from '@angular/material/paginator';
 @Component({
   selector: 'app-car-list',
   imports: [
-    MatError, MatTable, MatHeaderCellDef, MatCellDef, MatColumnDef,
+    MatTable, MatHeaderCellDef, MatCellDef, MatColumnDef,
     MatHeaderCell, MatCell, MatHeaderRowDef, MatRowDef, MatButton,
     MatHeaderRow, MatRow, MatProgressSpinner, TranslatePipe, MatSort,
-    MatSortHeader, MatPaginator, DecimalPipe
+    MatSortHeader, MatPaginator, DecimalPipe, MatIconModule
   ],
   templateUrl: './car-list.html',
   styleUrl: './car-list.css'

@@ -1,0 +1,76 @@
+<div class="dashboard">
+  <header class="encabezado">
+    <h2>Dashboard — CrediAuto</h2>
+  </header>
+
+  <!-- Tarjetas resumen -->
+  <div class="tarjetas-resumen">
+    <div class="tarjeta-metrica">
+      <span class="etiqueta">Cronogramas generados</span>
+      <strong>{{ totalOperations() }}</strong>
+    </div>
+    <div class="tarjeta-metrica">
+      <span class="etiqueta">Monto total simulado</span>
+      <strong>S/ {{ totalFinanced() | number:'1.0-0' }}</strong>
+    </div>
+    <div class="tarjeta-metrica">
+      <span class="etiqueta">Vehículos disponibles</span>
+      <strong>{{ availableCars() }} / {{ totalCars() }}</strong>
+    </div>
+    <div class="tarjeta-metrica">
+      <span class="etiqueta">TCEA promedio</span>
+      <strong>{{ avgTea() * 100 | number:'1.1-1' }}%</strong>
+    </div>
+  </div>
+
+  <div class="fila-doble">
+    <!-- Estado de vehículos -->
+    <section class="tarjeta">
+      <h3>Estado de vehículos</h3>
+      <div class="estados-lista">
+        <div class="estado-item"><span class="punto disponible"></span>Disponible <strong>{{ availableCars() }}</strong></div>
+        <div class="estado-item"><span class="punto reservado"></span>Reservado <strong>{{ reservedCars() }}</strong></div>
+        <div class="estado-item"><span class="punto agotado"></span>Agotado <strong>{{ soldOutCars() }}</strong></div>
+      </div>
+    </section>
+
+    <!-- Estado de cartera de clientes -->
+    <section class="tarjeta">
+      <h3>Estado de cartera</h3>
+      <div class="estados-lista">
+        @for (item of clientsByStatus(); track item.status) {
+          <div class="estado-item">
+            {{ item.status }}
+            <strong>{{ item.count }} · {{ item.percent }}%</strong>
+          </div>
+        }
+      </div>
+      <div class="total-clientes">Total: {{ totalClients() }}</div>
+    </section>
+  </div>
+
+  <!-- Últimas operaciones -->
+  <section class="tarjeta">
+    <h3>Últimas operaciones</h3>
+    @if (recentOperations().length === 0) {
+      <p class="vacio">Aún no se han generado cronogramas.</p>
+    } @else {
+      <table class="tabla-operaciones">
+        <thead>
+        <tr><th>Cliente</th><th>Vehículo</th><th>Monto</th><th>Cuota</th><th></th></tr>
+        </thead>
+        <tbody>
+          @for (op of recentOperations(); track op.id) {
+            <tr>
+              <td>{{ op.clientName }}</td>
+              <td>{{ op.carLabel }}</td>
+              <td>S/ {{ op.financedAmount | number:'1.0-0' }}</td>
+              <td>S/ {{ op.installmentAmount | number:'1.2-2' }}</td>
+              <td><a [routerLink]="['/schedules', op.id]">Ver</a></td>  <!-- ← esta línea -->
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+  </section>
+</div>

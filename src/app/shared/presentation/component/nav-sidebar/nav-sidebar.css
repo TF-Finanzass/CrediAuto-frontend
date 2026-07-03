@@ -1,0 +1,99 @@
+.nav-sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 240px;
+  height: 100vh;
+  background: #0f172a;
+  color: #e2e8f0;
+  padding: 20px 12px;
+  box-sizing: border-box;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 8px 20px;
+}
+
+.brand .brand-icon {
+  color: #3b82f6;
+}
+
+.brand h1 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.brand span {
+  font-size: 11px;
+  color: #94a3b8;
+}
+
+.nav-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.nav-menu .nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  color: #cbd5e1;
+  border-radius: 8px;
+  font-size: 14px;
+  text-transform: none;
+}
+
+.nav-menu .nav-item.active {
+  background: #1d4ed8;
+  color: #fff;
+}
+
+.nav-menu .nav-item:hover:not(.active) {
+  background: #1e293b;
+}
+
+.nav-footer {
+  border-top: 1px solid #1e293b;
+  padding-top: 12px;
+}
+
+.nav-footer .user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  margin-bottom: 4px;
+}
+
+.nav-footer .user-info .avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #3b82f6;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.nav-footer .user-info span {
+  font-size: 13px;
+  color: #e2e8f0;
+}
+
+.nav-footer .logout-btn {
+  width: 100%;
+  justify-content: flex-start;
+  gap: 10px;
+  color: #94a3b8;
+  text-transform: none;
+}

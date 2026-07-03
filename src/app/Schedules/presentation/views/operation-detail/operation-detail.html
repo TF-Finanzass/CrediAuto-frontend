@@ -1,0 +1,45 @@
+@if (operation(); as op) {
+  <div class="detalle">
+    <button mat-stroked-button class="back-btn" (click)="volver()">
+      <mat-icon>arrow_back</mat-icon>
+      Volver
+    </button>
+
+    <h2 class="titulo">Cronograma — {{ op.clientName }}</h2>
+    <p class="subtitulo">{{ op.carLabel }} · Creado el {{ op.createdAt | date:'dd/MM/yyyy' }}</p>
+
+    <div class="resumen">
+      <div><span>Monto financiado</span><strong>S/ {{ op.financedAmount | number:'1.2-2' }}</strong></div>
+      <div><span>TEA</span><strong>{{ op.tea * 100 | number:'1.2-2' }}%</strong></div>
+      <div><span>Cuota constante</span><strong>S/ {{ op.installmentAmount | number:'1.2-2' }}</strong></div>
+      <div><span>N° cuotas</span><strong>{{ op.totalPeriods }}</strong></div>
+    </div>
+
+    <div class="tabla-card">
+      <table class="tabla-cronograma">
+        <thead>
+        <tr>
+          <th>N°</th><th>Fecha</th><th>Saldo inicial</th><th>Interés</th>
+          <th>Amortización</th><th>Seguro</th><th>Cuota</th><th>Saldo final</th>
+        </tr>
+        </thead>
+        <tbody>
+          @for (cuota of op.schedule; track cuota.number) {
+            <tr [class.fila-gracia]="cuota.isGracePeriod">
+              <td>{{ cuota.number }}</td>
+              <td>{{ cuota.dueDate | date:'dd/MM/yyyy' }}</td>
+              <td>S/ {{ cuota.initialBalance | number:'1.2-2' }}</td>
+              <td>S/ {{ cuota.interest | number:'1.2-2' }}</td>
+              <td>S/ {{ cuota.amortization | number:'1.2-2' }}</td>
+              <td>S/ {{ cuota.insurance | number:'1.2-2' }}</td>
+              <td>S/ {{ cuota.installmentAmount | number:'1.2-2' }}</td>
+              <td>S/ {{ cuota.finalBalance | number:'1.2-2' }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+} @else {
+  <p class="no-encontrado">Operación no encontrada.</p>
+}

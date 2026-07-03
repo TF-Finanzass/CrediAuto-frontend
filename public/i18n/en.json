@@ -1,0 +1,11 @@
+{
+  "option": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "clients": "Clients",
+    "vehicles": "Vehicles",
+    "simulator": "Simulator",
+    "schedules": "Schedules",
+    "settings": "Settings"
+  }
+}

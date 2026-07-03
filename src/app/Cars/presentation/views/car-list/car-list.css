@@ -1,8 +1,134 @@
-.title {
-  margin: 16px;
+.cars-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.mat-table {
-  width: 100%;
-  margin-bottom: 16px;
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  color: #f1f5f9;
+}
+
+.subtitle {
+  font-size: 13px;
+  color: #64748b;
+}
+
+.new-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #1d4ed8 !important;
+  color: #fff !important;
+}
+
+.state-row {
+  display: flex;
+  justify-content: center;
+  padding: 24px 0;
+}
+
+.error-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  color: #fca5a5;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.table-card {
+  background: #0f172a;
+  border: 1px solid #1e293b;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* --- Tabla Material (MDC), sobreescritura vía ::ng-deep --- */
+::ng-deep .table-card .mat-mdc-table {
+  background: transparent;
+}
+
+::ng-deep .table-card .mat-mdc-header-row {
+  background: #111c34;
+}
+
+::ng-deep .table-card .mat-mdc-header-cell {
+  color: #94a3b8;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom-color: #1e293b;
+}
+
+::ng-deep .table-card .mat-mdc-row {
+  transition: background-color 0.15s ease;
+}
+
+::ng-deep .table-card .mat-mdc-row:hover {
+  background: #111c34;
+}
+
+::ng-deep .table-card .mat-mdc-cell {
+  color: #e2e8f0;
+  font-size: 14px;
+  border-bottom-color: #1e293b;
+}
+
+::ng-deep .table-card .mat-sort-header-arrow {
+  color: #3b82f6;
+}
+
+.price-cell {
+  font-variant-numeric: tabular-nums;
+  color: #f1f5f9;
+}
+
+/* --- Badges de estado --- */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-disponible {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+}
+
+.status-reservado {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+}
+
+.status-agotado {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+}
+
+/* --- Paginador --- */
+::ng-deep .table-card .mat-mdc-paginator {
+  background: #111c34;
+  color: #94a3b8;
+  border-top: 1px solid #1e293b;
+}
+
+::ng-deep .table-card .mat-mdc-paginator .mat-mdc-select-value,
+::ng-deep .table-card .mat-mdc-paginator .mat-mdc-icon-button {
+  color: #94a3b8;
 }

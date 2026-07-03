@@ -7,7 +7,7 @@ import {CarResource, CarsResponse} from './cars-response';
  */
 export class CarAssembler implements BaseAssembler<Car, CarResource, CarsResponse> {
   toEntitiesFromResponse(response: CarsResponse): Car[] {
-    return response.cars.map(resource => this.toEntityFromResource(resource as CarResource));
+    return response.map(resource => this.toEntityFromResource(resource));
   }
 
   toEntityFromResource(resource: CarResource): Car {

@@ -1,0 +1,106 @@
+.simulador { color: #e2e8f0; }
+
+.encabezado {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 16px;
+}
+.encabezado h2 { margin: 0; font-size: 22px; font-weight: 600; color: #f1f5f9; }
+.acciones-header { display: flex; gap: 8px; }
+
+.tarjeta {
+  background: #1e293b; border-radius: 12px; padding: 16px; margin-bottom: 16px;
+}
+.tarjeta h3 { margin: 0 0 12px; font-size: 14px; color: #f1f5f9; }
+
+.fila { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-start; }
+.fila mat-form-field { flex: 1; min-width: 180px; }
+
+.resumen-resultado {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px;
+}
+.resumen-resultado div {
+  background: #0f172a; border-radius: 8px; padding: 10px 14px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.resumen-resultado span { font-size: 11px; color: #94a3b8; }
+.resumen-resultado strong { font-size: 15px; color: #f1f5f9; }
+
+.tabla-cronograma { width: 100%; border-collapse: collapse; font-size: 12px; }
+.tabla-cronograma th, .tabla-cronograma td {
+  padding: 8px; text-align: right; border-bottom: 1px solid #334155; color: #e2e8f0;
+}
+.tabla-cronograma th { color: #94a3b8; font-weight: 600; text-transform: uppercase; font-size: 11px; letter-spacing: 0.03em; }
+.tabla-cronograma th:first-child, .tabla-cronograma td:first-child,
+.tabla-cronograma th:nth-child(2), .tabla-cronograma td:nth-child(2) { text-align: left; }
+.fila-gracia { color: #fbbf24; }
+
+/* --- Campos outline: texto y label --- */
+::ng-deep .simulador .mat-mdc-form-field-label,
+::ng-deep .simulador .mdc-floating-label {
+  color: #64748b !important;
+}
+
+::ng-deep .simulador .mdc-floating-label--float-above {
+  color: #94a3b8 !important;
+}
+
+::ng-deep .simulador input.mat-mdc-input-element {
+  color: #f1f5f9 !important;
+  caret-color: #3b82f6;
+}
+
+::ng-deep .simulador input.mat-mdc-input-element:disabled {
+  color: #475569 !important;
+}
+
+::ng-deep .simulador .mat-mdc-select-value-text {
+  color: #f1f5f9 !important;
+}
+
+::ng-deep .simulador .mat-mdc-select-arrow {
+  color: #64748b !important;
+}
+
+/* --- Borde del outline --- */
+::ng-deep .simulador .mdc-notched-outline__leading,
+::ng-deep .simulador .mdc-notched-outline__notch,
+::ng-deep .simulador .mdc-notched-outline__trailing {
+  border-color: #334155 !important;
+}
+
+::ng-deep .simulador .mat-mdc-form-field:hover .mdc-notched-outline__leading,
+::ng-deep .simulador .mat-mdc-form-field:hover .mdc-notched-outline__notch,
+::ng-deep .simulador .mat-mdc-form-field:hover .mdc-notched-outline__trailing {
+  border-color: #475569 !important;
+}
+
+::ng-deep .simulador .mat-focused .mdc-notched-outline__leading,
+::ng-deep .simulador .mat-focused .mdc-notched-outline__notch,
+::ng-deep .simulador .mat-focused .mdc-notched-outline__trailing {
+  border-color: #3b82f6 !important;
+}
+
+::ng-deep .simulador .mat-mdc-form-field-error {
+  color: #f87171 !important;
+}
+
+/* --- Toggle "Periodo de gracia" --- */
+::ng-deep .simulador .mat-button-toggle-group {
+  border-color: #334155 !important;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+::ng-deep .simulador .mat-button-toggle {
+  background: #0f172a !important;
+  color: #94a3b8 !important;
+}
+
+::ng-deep .simulador .mat-button-toggle-checked {
+  background: #1d4ed8 !important;
+  color: #fff !important;
+}
+
+::ng-deep .simulador .mat-button-toggle-label-content {
+  line-height: 40px !important;
+}

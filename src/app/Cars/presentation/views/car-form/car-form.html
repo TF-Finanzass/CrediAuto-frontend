@@ -1,57 +1,68 @@
-<h1 class="title">{{ 'car.new-title' | translate }}</h1>
-<form [formGroup]="form" (ngSubmit)="submit()">
+<div class="form-page">
+  <h1 class="title">{{ 'car.new-title' | translate }}</h1>
 
-  <mat-form-field>
-    <mat-label>{{ 'car.brand' | translate }}</mat-label>
-    <input matInput formControlName="brand" required>
-    @if (form.get('brand')!.touched && form.get('brand')!.hasError('required')) {
-      <mat-error>{{ 'car.error.brand-required' | translate }}</mat-error>
-    }
-  </mat-form-field>
+  <div class="form-card">
+    <form [formGroup]="form" (ngSubmit)="submit()">
 
-  <mat-form-field>
-    <mat-label>{{ 'car.model' | translate }}</mat-label>
-    <input matInput formControlName="model" required>
-    @if (form.get('model')!.touched && form.get('model')!.hasError('required')) {
-      <mat-error>{{ 'car.error.model-required' | translate }}</mat-error>
-    }
-  </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'car.brand' | translate }}</mat-label>
+        <input matInput formControlName="brand" required>
+        @if (form.get('brand')!.touched && form.get('brand')!.hasError('required')) {
+          <mat-error>{{ 'car.error.brand-required' | translate }}</mat-error>
+        }
+      </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>{{ 'car.year' | translate }}</mat-label>
-    <input matInput type="number" formControlName="year" required>
-  </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'car.model' | translate }}</mat-label>
+        <input matInput formControlName="model" required>
+        @if (form.get('model')!.touched && form.get('model')!.hasError('required')) {
+          <mat-error>{{ 'car.error.model-required' | translate }}</mat-error>
+        }
+      </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>{{ 'car.price' | translate }}</mat-label>
-    <input matInput type="number" formControlName="price" required>
-  </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'car.year' | translate }}</mat-label>
+        <input matInput type="number" formControlName="year" required>
+      </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>{{ 'car.fuel-type' | translate }}</mat-label>
-    <input matInput formControlName="fuelType" required>
-  </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'car.price' | translate }}</mat-label>
+        <input matInput type="number" formControlName="price" required>
+      </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>{{ 'car.transmission' | translate }}</mat-label>
-    <input matInput formControlName="transmission" required>
-  </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'car.fuel-type' | translate }}</mat-label>
+        <input matInput formControlName="fuelType" required>
+      </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>{{ 'car.detail' | translate }}</mat-label>
-    <input matInput formControlName="detail" placeholder="1.5L · 5 puertas">
-  </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'car.transmission' | translate }}</mat-label>
+        <input matInput formControlName="transmission" required>
+      </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>{{ 'car.status' | translate }}</mat-label>
-    <mat-select formControlName="status">
-      @for (status of statuses; track status) {
-        <mat-option [value]="status">{{ status }}</mat-option>
-      }
-    </mat-select>
-  </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'car.detail' | translate }}</mat-label>
+        <input matInput formControlName="detail" placeholder="1.5L · 5 puertas">
+      </mat-form-field>
 
-  <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
-    {{ 'car.create' | translate }}
-  </button>
-</form>
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'car.status' | translate }}</mat-label>
+        <mat-select formControlName="status">
+          @for (status of statuses; track status) {
+            <mat-option [value]="status">{{ status }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <div class="form-actions">
+        <button mat-stroked-button type="button" class="back-btn" (click)="goBack()">
+          <mat-icon>arrow_back</mat-icon>
+          {{ 'car.back' | translate }}
+        </button>
+        <button mat-raised-button color="primary" class="submit-btn" type="submit" [disabled]="form.invalid">
+          {{ 'car.create' | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

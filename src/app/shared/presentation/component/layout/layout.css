@@ -1,0 +1,17 @@
+.layout {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.sidebar-bottom {
+  display: none; /* lo movemos dentro del nav, ver nota abajo */
+}
+
+.main {
+  flex: 1;
+  overflow-y: auto;
+  background: #0b1220;
+  padding: 24px;
+  box-sizing: border-box;
+}

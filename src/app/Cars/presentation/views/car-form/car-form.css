@@ -1,10 +1,107 @@
-.title {
-  margin: 16px;
+.form-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 640px;
 }
-form {
+
+.title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  color: #f1f5f9;
+}
+
+.form-card {
+  background: #0f172a;
+  border: 1px solid #1e293b;
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.form-card form {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  max-width: 600px;
-  margin: 16px;
+  width: 100%;
+}
+
+.form-card mat-form-field {
+  display: flex;
+  width: 100%;
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.submit-btn {
+  background-color: #1d4ed8 !important;
+  color: #fff !important;
+}
+
+.back-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #94a3b8 !important;
+  border-color: #334155 !important;
+}
+
+.back-btn:hover {
+  color: #e2e8f0 !important;
+  border-color: #475569 !important;
+}
+
+/* --- Campo outline: texto y label --- */
+::ng-deep .form-card .mat-mdc-form-field-label,
+::ng-deep .form-card .mdc-floating-label {
+  color: #64748b !important;
+}
+
+::ng-deep .form-card .mdc-floating-label--float-above {
+  color: #94a3b8 !important;
+}
+
+::ng-deep .form-card input.mat-mdc-input-element {
+  color: #f1f5f9 !important;
+  caret-color: #3b82f6;
+}
+
+::ng-deep .form-card .mat-mdc-select-value-text {
+  color: #f1f5f9 !important;
+}
+
+::ng-deep .form-card .mat-mdc-select-arrow {
+  color: #64748b !important;
+}
+
+/* --- Borde del outline --- */
+::ng-deep .form-card .mdc-notched-outline__leading,
+::ng-deep .form-card .mdc-notched-outline__notch,
+::ng-deep .form-card .mdc-notched-outline__trailing {
+  border-color: #334155 !important;
+}
+
+::ng-deep .form-card .mat-mdc-form-field:hover .mdc-notched-outline__leading,
+::ng-deep .form-card .mat-mdc-form-field:hover .mdc-notched-outline__notch,
+::ng-deep .form-card .mat-mdc-form-field:hover .mdc-notched-outline__trailing {
+  border-color: #475569 !important;
+}
+
+::ng-deep .form-card .mat-focused .mdc-notched-outline__leading,
+::ng-deep .form-card .mat-focused .mdc-notched-outline__notch,
+::ng-deep .form-card .mat-focused .mdc-notched-outline__trailing {
+  border-color: #3b82f6 !important;
+}
+
+::ng-deep .form-card .mat-mdc-form-field-error {
+  color: #f87171 !important;
+}
+
+::ng-deep .form-card .mat-mdc-form-field-hint {
+  color: #64748b !important;
 }

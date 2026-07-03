@@ -1,8 +1,10 @@
 export const environment = {
-  production: true,
-  platformProviderApiBaseUrl: 'http://localhost:3000/api/v1',
-  platformProviderCategoriesEndpointPath: '/categories',
-  platformProviderCoursesEndpointPath: '/courses',
+  production: false,
+  platformProviderApiBaseUrl: 'http://localhost:8080/api/v1',
+  platformProviderCarsEndpointPath: '/car',
+  platformProviderClientsEndpointPath: '/client',
+  platformProviderCreditOperationsEndpointPath: '/credit-operations',
+  platformProviderSimulationsEndpointPath: '/simulation',
   platformProviderSignInEndpointPath: '/authentication/sign-in',
   platformProviderSignUpEndpointPath: '/authentication/sign-up',
   logoProviderApiBaseUrl: 'https://logo.clearbit.com/'

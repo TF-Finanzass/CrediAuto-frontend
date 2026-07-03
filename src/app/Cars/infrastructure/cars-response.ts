@@ -1,4 +1,4 @@
-import {BaseResource, BaseResponse} from '../../shared/infrastructure/base-response';
+import {BaseResource} from '../../shared/infrastructure/base-response';
 
 /**
  * Represents the API resource for a car in the infrastructure layer of the 'cars' bounded context.
@@ -16,8 +16,6 @@ export interface CarResource extends BaseResource {
 }
 
 /**
- * Represents the API response structure for a list of cars.
+ * El backend devuelve un array plano de CarResource, no un objeto envuelto.
  */
-export interface CarsResponse extends BaseResponse {
-  cars: CarResource[];
-}
+export type CarsResponse = CarResource[];

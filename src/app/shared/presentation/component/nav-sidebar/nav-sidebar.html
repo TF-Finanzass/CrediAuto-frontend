@@ -1,0 +1,28 @@
+<aside class="nav-sidebar">
+
+  <div class="brand">
+    <mat-icon class="brand-icon">directions_car</mat-icon>
+    <div class="brand-text">
+      <h1>CrediAuto</h1>
+      <span>Sistema financiero vehicular</span>
+    </div>
+  </div>
+
+  <nav class="nav-menu">
+    @for (option of options; track option.link) {
+      <a mat-button class="nav-item" [routerLink]="option.link" routerLinkActive="active">
+        <mat-icon>{{ option.icon }}</mat-icon>
+        <span>{{ option.label }}</span>
+      </a>
+    }
+  </nav>
+
+  <div class="language-switcher-wrapper">
+    <app-language-switcher/>
+  </div>
+
+  <div class="nav-footer">
+    <app-authentication-section/>
+  </div>
+
+</aside>

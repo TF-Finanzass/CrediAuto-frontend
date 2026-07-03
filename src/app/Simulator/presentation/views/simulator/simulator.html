@@ -1,0 +1,150 @@
+<div class="simulador">
+  <header class="encabezado">
+    <h2>Simulador — Compra Inteligente</h2>
+    <div class="acciones-header">
+      <button mat-stroked-button (click)="limpiar()">Limpiar</button>
+      <button mat-flat-button color="primary" (click)="calcular()">Calcular</button>
+      <button mat-stroked-button (click)="guardar()" [disabled]="!result()">Guardar</button>
+    </div>
+  </header>
+
+  <form [formGroup]="form">
+
+    <section class="tarjeta">
+      <h3>1. Cliente y vehículo</h3>
+      <div class="fila">
+        <mat-form-field appearance="outline">
+          <mat-label>Cliente registrado</mat-label>
+          <mat-select formControlName="clientId">
+            @for (client of clientsStore.clients(); track client.id) {
+              <mat-option [value]="client.id">{{ client.fullName }} {{ client.lastName }} — DNI {{ client.documentNumber }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Vehículo seleccionado</mat-label>
+          <mat-select formControlName="carId" (selectionChange)="onCarSelected($event.value)">
+            @for (car of carsStore.cars(); track car.id) {
+              <mat-option [value]="car.id">{{ car.brand }} {{ car.model }} {{ car.year }} — S/ {{ car.price | number }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </section>
+
+    <section class="tarjeta">
+      <h3>2. Configuración del crédito</h3>
+      <div class="fila">
+        <mat-form-field appearance="outline">
+          <mat-label>Precio del vehículo (S/)</mat-label>
+          <input matInput type="number" formControlName="vehiclePrice">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Cuota inicial (%)</mat-label>
+          <input matInput type="number" formControlName="downPaymentPercent">
+        </mat-form-field>
+      </div>
+
+      <div class="fila">
+        <mat-form-field appearance="outline">
+          <mat-label>Tipo de tasa</mat-label>
+          <mat-select formControlName="rateType">
+            @for (rt of rateTypes; track rt) {
+              <mat-option [value]="rt">{{ rt }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Tasa de interés anual (%)</mat-label>
+          <input matInput type="number" formControlName="annualRate">
+        </mat-form-field>
+
+        @if (form.value.rateType === RateType.Nominal) {
+          <mat-form-field appearance="outline">
+            <mat-label>Capitalización</mat-label>
+            <mat-select formControlName="capitalization">
+              @for (freq of frequencies; track freq) {
+                <mat-option [value]="freq">{{ freq }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        }
+      </div>
+
+      <div class="fila">
+        <mat-form-field appearance="outline">
+          <mat-label>Frecuencia de pago</mat-label>
+          <mat-select formControlName="paymentFrequency">
+            @for (freq of frequencies; track freq) {
+              <mat-option [value]="freq">{{ freq }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Plazo (meses)</mat-label>
+          <input matInput type="number" formControlName="termMonths">
+        </mat-form-field>
+      </div>
+    </section>
+
+    <section class="tarjeta">
+      <h3>3. Periodo de gracia</h3>
+      <div class="fila">
+        <mat-button-toggle-group formControlName="graceType">
+          @for (gt of graceTypes; track gt) {
+            <mat-button-toggle [value]="gt">{{ gt }}</mat-button-toggle>
+          }
+        </mat-button-toggle-group>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Meses de gracia</mat-label>
+          <input matInput type="number" formControlName="graceMonths" [disabled]="form.value.graceType === GraceType.Sin">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Seguro vehicular mensual (S/)</mat-label>
+          <input matInput type="number" formControlName="monthlyInsurance">
+        </mat-form-field>
+      </div>
+    </section>
+  </form>
+
+  @if (result(); as r) {
+    <section class="tarjeta">
+      <h3>4. Resultado</h3>
+      <div class="resumen-resultado">
+        <div><span>Monto a financiar</span><strong>S/ {{ r.financedAmount | number:'1.2-2' }}</strong></div>
+        <div><span>TEA efectiva usada</span><strong>{{ r.tea * 100 | number:'1.2-2' }}%</strong></div>
+        <div><span>Tasa por periodo</span><strong>{{ r.periodicRate * 100 | number:'1.4-4' }}%</strong></div>
+        <div><span>Cuota constante</span><strong>S/ {{ r.installmentAmount | number:'1.2-2' }}</strong></div>
+      </div>
+
+      <table class="tabla-cronograma">
+        <thead>
+        <tr>
+          <th>N°</th><th>Fecha</th><th>Saldo inicial</th><th>Interés</th>
+          <th>Amortización</th><th>Seguro</th><th>Cuota</th><th>Saldo final</th>
+        </tr>
+        </thead>
+        <tbody>
+          @for (cuota of r.schedule; track cuota.number) {
+            <tr [class.fila-gracia]="cuota.isGracePeriod">
+              <td>{{ cuota.number }}</td>
+              <td>{{ cuota.dueDate | date:'dd/MM/yyyy' }}</td>
+              <td>S/ {{ cuota.initialBalance | number:'1.2-2' }}</td>
+              <td>S/ {{ cuota.interest | number:'1.2-2' }}</td>
+              <td>S/ {{ cuota.amortization | number:'1.2-2' }}</td>
+              <td>S/ {{ cuota.insurance | number:'1.2-2' }}</td>
+              <td>S/ {{ cuota.installmentAmount | number:'1.2-2' }}</td>
+              <td>S/ {{ cuota.finalBalance | number:'1.2-2' }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </section>
+  }
+</div>
