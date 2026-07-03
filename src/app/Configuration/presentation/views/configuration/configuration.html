@@ -1,0 +1,38 @@
+<div class="configuracion">
+  <h2 class="titulo">Configuración</h2>
+
+  <section class="tarjeta">
+    <h3>Moneda</h3>
+    <p class="descripcion">Define la moneda usada en el simulador y los cronogramas.</p>
+    <mat-button-toggle-group
+      [value]="store.currency()"
+      (change)="store.setCurrency($event.value)">
+      <mat-button-toggle [value]="Currency.PEN">S/ Soles</mat-button-toggle>
+      <mat-button-toggle [value]="Currency.USD">$ Dólares</mat-button-toggle>
+    </mat-button-toggle-group>
+  </section>
+
+  <section class="tarjeta">
+    <h3>Tipo de cambio</h3>
+    <p class="descripcion">1 USD equivale a cuántos soles. Se usa para convertir el precio de vehículos registrados en dólares dentro del simulador.</p>
+    <input
+      type="number"
+      step="0.01"
+      min="0"
+      [value]="store.exchangeRate()"
+      (change)="store.setExchangeRate($any($event.target).valueAsNumber)"
+    />
+  </section>
+
+  <section class="tarjeta">
+    <h3>Idioma</h3>
+    <p class="descripcion">Define el idioma de la aplicación.</p>
+    <mat-button-toggle-group
+      [value]="currentLang"
+      (change)="useLanguage($event.value)">
+      @for (language of languages; track language) {
+        <mat-button-toggle [value]="language">{{ language.toUpperCase() }}</mat-button-toggle>
+      }
+    </mat-button-toggle-group>
+  </section>
+</div>
