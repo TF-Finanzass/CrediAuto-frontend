@@ -1,16 +1,20 @@
-import {Injectable} from '@angular/core';
-import {CreditSimulationInput, CreditSimulationResult, Installment} from '../../domain/model/installment';
-import {RateType} from '../../domain/model/rate-type';
-import {GraceType} from '../../domain/model/grace-type';
-import {monthsPerPeriod, periodsPerYear} from '../../domain/model/payment-frequency';
+import { Injectable } from '@angular/core';
+import {
+  CreditSimulationInput,
+  CreditSimulationResult,
+  Installment,
+} from '../../domain/model/installment';
+import { RateType } from '../../domain/model/rate-type';
+import { GraceType } from '../../domain/model/grace-type';
+import { monthsPerPeriod, periodsPerYear } from '../../domain/model/payment-frequency';
 
 /**
  * Servicio de cálculo financiero: método francés de amortización con soporte
- * para tasa nominal/efectiva, frecuencia de pago variable y periodo de gracia.
+ * para tasa nominal/efectiva, frecuencia de pago variable, periodo de gracia
+ * y cálculo de indicadores VAN/TIR desde el punto de vista del deudor.
  */
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class FrenchAmortizationService {
-
   simulate(input: CreditSimulationInput): CreditSimulationResult {
     const downPaymentAmount = input.vehiclePrice * (input.downPaymentPercent / 100);
     const financedAmount = input.vehiclePrice - downPaymentAmount;
@@ -19,9 +23,8 @@ export class FrenchAmortizationService {
     const monthsPerPmt = monthsPerPeriod(input.paymentFrequency);
 
     const totalPeriods = Math.round(input.termMonths / monthsPerPmt);
-    const gracePeriods = input.graceType === GraceType.Sin
-      ? 0
-      : Math.round(input.graceMonths / monthsPerPmt);
+    const gracePeriods =
+      input.graceType === GraceType.Sin ? 0 : Math.round(input.graceMonths / monthsPerPmt);
 
     const tea = this.computeTEA(input);
     const i = Math.pow(1 + tea, 1 / paymentFreq) - 1; // tasa efectiva del periodo de pago
@@ -39,24 +42,36 @@ export class FrenchAmortizationService {
       if (input.graceType === GraceType.Total) {
         const finalBalance = balance + interest; // se capitaliza
         schedule.push({
-          number: k, dueDate: currentDate, isGracePeriod: true,
-          initialBalance: balance, interest, amortization: 0,
-          insurance: 0, installmentAmount: 0, finalBalance
+          number: k,
+          dueDate: currentDate,
+          isGracePeriod: true,
+          initialBalance: balance,
+          interest,
+          amortization: 0,
+          insurance: 0,
+          installmentAmount: 0,
+          finalBalance,
         });
         balance = finalBalance;
-      } else { // Parcial: solo se paga el interés
+      } else {
+        // Parcial: solo se paga el interés
         schedule.push({
-          number: k, dueDate: currentDate, isGracePeriod: true,
-          initialBalance: balance, interest, amortization: 0,
-          insurance: insurancePerPeriod, installmentAmount: interest + insurancePerPeriod,
-          finalBalance: balance
+          number: k,
+          dueDate: currentDate,
+          isGracePeriod: true,
+          initialBalance: balance,
+          interest,
+          amortization: 0,
+          insurance: insurancePerPeriod,
+          installmentAmount: interest + insurancePerPeriod,
+          finalBalance: balance,
         });
       }
     }
 
     // --- Cronograma regular (método francés) ---
     const remainingPeriods = totalPeriods - gracePeriods;
-    const cuota = balance * i / (1 - Math.pow(1 + i, -remainingPeriods));
+    const cuota = (balance * i) / (1 - Math.pow(1 + i, -remainingPeriods));
 
     for (let k = 1; k <= remainingPeriods; k++) {
       currentDate = this.addMonths(currentDate, monthsPerPmt);
@@ -65,17 +80,42 @@ export class FrenchAmortizationService {
       const finalBalance = Math.max(balance - amortization, 0);
 
       schedule.push({
-        number: gracePeriods + k, dueDate: currentDate, isGracePeriod: false,
-        initialBalance: balance, interest, amortization,
-        insurance: insurancePerPeriod, installmentAmount: cuota + insurancePerPeriod,
-        finalBalance
+        number: gracePeriods + k,
+        dueDate: currentDate,
+        isGracePeriod: false,
+        initialBalance: balance,
+        interest,
+        amortization,
+        insurance: insurancePerPeriod,
+        installmentAmount: cuota + insurancePerPeriod,
+        finalBalance,
       });
       balance = finalBalance;
     }
 
+    // --- VAN y TIR (desde el punto de vista del deudor) ---
+    // Flujo: t0 = +financedAmount (recibe el préstamo), t1..tn = -cuota (paga)
+    const cashFlows = [financedAmount, ...schedule.map((row) => -row.installmentAmount)];
+
+    const discountRateAnnual = input.discountRate / 100;
+    const periodicDiscountRate = Math.pow(1 + discountRateAnnual, 1 / paymentFreq) - 1;
+
+    const van = this.computeNPV(cashFlows, periodicDiscountRate);
+    const periodicTIR = this.computeIRR(cashFlows);
+    const tir = Math.pow(1 + periodicTIR, paymentFreq) - 1; // anualizada, comparable al TEA
+
     return {
-      downPaymentAmount, financedAmount, periodicRate: i, tea,
-      installmentAmount: cuota, totalPeriods, gracePeriods, schedule
+      downPaymentAmount,
+      financedAmount,
+      periodicRate: i,
+      tea,
+      installmentAmount: cuota,
+      totalPeriods,
+      gracePeriods,
+      schedule,
+      van,
+      tir,
+      discountRate: discountRateAnnual,
     };
   }
 
@@ -85,8 +125,48 @@ export class FrenchAmortizationService {
       return input.annualRate / 100;
     }
     const capFreq = periodsPerYear(input.capitalization);
-    const periodicCapRate = (input.annualRate / 100) / capFreq;
+    const periodicCapRate = input.annualRate / 100 / capFreq;
     return Math.pow(1 + periodicCapRate, capFreq) - 1;
+  }
+
+  /** Valor Actual Neto de un flujo de caja a una tasa periódica dada. */
+  private computeNPV(cashFlows: number[], periodicRate: number): number {
+    return cashFlows.reduce((acc, cf, t) => acc + cf / Math.pow(1 + periodicRate, t), 0);
+  }
+
+  /** TIR periódica vía Newton-Raphson, con fallback a bisección. */
+  private computeIRR(cashFlows: number[], guess = 0.05): number {
+    const maxIterations = 100;
+    const tolerance = 1e-7;
+    let rate = guess;
+
+    for (let iter = 0; iter < maxIterations; iter++) {
+      const npv = this.computeNPV(cashFlows, rate);
+      const derivative = cashFlows.reduce(
+        (acc, cf, t) => (t === 0 ? acc : acc - (t * cf) / Math.pow(1 + rate, t + 1)),
+        0,
+      );
+      if (Math.abs(derivative) < 1e-12) break;
+
+      const nextRate = rate - npv / derivative;
+      if (Math.abs(nextRate - rate) < tolerance) return nextRate;
+      rate = nextRate;
+    }
+
+    return this.computeIRRByBisection(cashFlows);
+  }
+
+  private computeIRRByBisection(cashFlows: number[]): number {
+    let low = -0.99;
+    let high = 10;
+    for (let iter = 0; iter < 200; iter++) {
+      const mid = (low + high) / 2;
+      const npv = this.computeNPV(cashFlows, mid);
+      if (Math.abs(npv) < 1e-6) return mid;
+      if (npv > 0) low = mid;
+      else high = mid;
+    }
+    return (low + high) / 2;
   }
 
   private addMonths(date: Date, months: number): Date {

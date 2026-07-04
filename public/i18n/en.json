@@ -4,8 +4,65 @@
     "dashboard": "Dashboard",
     "clients": "Clients",
     "vehicles": "Vehicles",
-    "simulator": "Simulator",
+    "simulator": "Simulation",
     "schedules": "Schedules",
     "settings": "Settings"
+  },
+  "cars": {
+    "list-title": "Vehicle Catalog",
+    "count-label": "registered vehicles",
+    "brand": "Brand",
+    "model": "Model",
+    "year": "Year",
+    "price": "Price",
+    "fuel-type": "Fuel Type",
+    "transmission": "Transmission",
+    "status": "Status",
+    "new": "New Vehicle"
+  },
+  "car": {
+    "new-title": "Register Vehicle",
+    "brand": "Brand",
+    "model": "Model",
+    "year": "Year",
+    "price": "Price",
+    "fuel-type": "Fuel Type",
+    "transmission": "Transmission",
+    "detail": "Details",
+    "status": "Status",
+    "create": "Register",
+    "back": "Back",
+    "error": {
+      "brand-required": "Brand is required",
+      "model-required": "Model is required"
+    }
+  },
+  "clients": {
+    "list-title": "Clients",
+    "count-label": "registered clients",
+    "full-name": "First Name",
+    "last-name": "Last Name",
+    "document": "National ID",
+    "email": "Email",
+    "phone": "Phone",
+    "monthly-income": "Monthly Income",
+    "status": "Status",
+    "new": "New Client"
+  },
+  "client": {
+    "new-title": "Register Client",
+    "full-name": "First Name",
+    "last-name": "Last Name",
+    "document": "National ID",
+    "email": "Email",
+    "phone": "Phone",
+    "monthly-income": "Monthly Income",
+    "status": "Status",
+    "create": "Register",
+    "back": "Back",
+    "error": {
+      "full-name-required": "First name is required",
+      "email-invalid": "Invalid email address"
+    }
   }
 }

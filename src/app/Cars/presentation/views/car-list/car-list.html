@@ -42,17 +42,7 @@
 
       <ng-container matColumnDef="price">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'cars.price' | translate }}</th>
-        <td mat-cell *matCellDef="let car" class="price-cell"> S/ {{ car.price | number }} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="fuelType">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'cars.fuel-type' | translate }}</th>
-        <td mat-cell *matCellDef="let car"> {{ car.fuelType }} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="transmission">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'cars.transmission' | translate }}</th>
-        <td mat-cell *matCellDef="let car"> {{ car.transmission }} </td>
+        <td mat-cell *matCellDef="let car" class="price-cell"> {{ symbolFor(car.currency) }} {{ car.price | number }} </td>
       </ng-container>
 
       <ng-container matColumnDef="status">

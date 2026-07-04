@@ -17,7 +17,7 @@ import {MatIconModule} from '@angular/material/icon';
 @Component({
   selector: 'app-client-list',
   imports: [
-    MatError, MatTable, MatHeaderCellDef, MatCellDef, MatColumnDef,
+    MatTable, MatHeaderCellDef, MatCellDef, MatColumnDef,
     MatHeaderCell, MatCell, MatHeaderRowDef, MatRowDef, MatButton,
     MatHeaderRow, MatRow, MatProgressSpinner, TranslatePipe, MatSort,
     MatSortHeader, MatPaginator, DecimalPipe, MatIconModule

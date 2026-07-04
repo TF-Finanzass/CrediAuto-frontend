@@ -1,13 +1,11 @@
-import {BaseAssembler} from '../../shared/infrastructure/base-assembler';
-import {Car, CarStatus} from '../domain/model/car.entity';
-import {CarResource, CarsResponse} from './cars-response';
+import { BaseAssembler } from '../../shared/infrastructure/base-assembler';
+import { Car, CarStatus } from '../domain/model/car.entity';
+import { CarResource, CarsResponse } from './cars-response';
+import { Currency } from '../../Configuration/domain/model/currency';
 
-/**
- * Assembler for converting between Car entities, CarResource resources, and CarsResponse.
- */
 export class CarAssembler implements BaseAssembler<Car, CarResource, CarsResponse> {
   toEntitiesFromResponse(response: CarsResponse): Car[] {
-    return response.map(resource => this.toEntityFromResource(resource));
+    return response.map((resource) => this.toEntityFromResource(resource));
   }
 
   toEntityFromResource(resource: CarResource): Car {
@@ -17,10 +15,9 @@ export class CarAssembler implements BaseAssembler<Car, CarResource, CarsRespons
       model: resource.model,
       year: resource.year,
       price: resource.price,
-      fuelType: resource.fuelType,
-      transmission: resource.transmission,
+      currency: resource.currency as Currency,
       detail: resource.detail,
-      status: resource.status as CarStatus
+      status: resource.status as CarStatus,
     });
   }
 
@@ -31,10 +28,9 @@ export class CarAssembler implements BaseAssembler<Car, CarResource, CarsRespons
       model: entity.model,
       year: entity.year,
       price: entity.price,
-      fuelType: entity.fuelType,
-      transmission: entity.transmission,
+      currency: entity.currency,
       detail: entity.detail,
-      status: entity.status
+      status: entity.status,
     } as CarResource;
   }
 }

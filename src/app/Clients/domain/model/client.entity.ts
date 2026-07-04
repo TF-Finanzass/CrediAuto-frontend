@@ -2,7 +2,6 @@ import {BaseEntity} from '../../../shared/infrastructure/base-entity';
 
 export enum ClientStatus {
   Aprobado = 'Aprobado',
-  EnEvaluacion = 'En evaluación',
   Pendiente = 'Pendiente',
   Rechazado = 'Rechazado'
 }

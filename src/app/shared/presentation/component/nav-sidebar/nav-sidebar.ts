@@ -14,7 +14,13 @@ interface NavOption {
 @Component({
   selector: 'app-nav-sidebar',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, MatButtonModule, MatIconModule, LanguageSwitcher, AuthenticationSection],
+  imports: [
+    RouterLink,
+    RouterLinkActive,
+    MatButtonModule,
+    MatIconModule,
+    AuthenticationSection,
+  ],
   templateUrl: './nav-sidebar.html',
   styleUrl: './nav-sidebar.css',
 })
@@ -25,7 +31,6 @@ export class NavSidebar {
     { label: 'Vehículos', link: '/cars', icon: 'directions_car' },
     { label: 'Simulador', link: '/simulator', icon: 'calculate' },
     { label: 'Cronogramas', link: '/schedules', icon: 'event_note' },
-    { label: 'Reportes', link: '/reportes', icon: 'assessment' },
-    { label: 'Configuración', link: '/configuracion', icon: 'settings' },
+    { label: 'Configuración', link: '/configuration', icon: 'settings' },
   ];
 }

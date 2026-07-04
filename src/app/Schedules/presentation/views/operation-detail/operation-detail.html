@@ -9,31 +9,34 @@
     <p class="subtitulo">{{ op.carLabel }} · Creado el {{ op.createdAt | date:'dd/MM/yyyy' }}</p>
 
     <div class="resumen">
-      <div><span>Monto financiado</span><strong>S/ {{ op.financedAmount | number:'1.2-2' }}</strong></div>
+      <div><span>Monto financiado</span><strong>{{ symbolFor(op.currency) }} {{ op.financedAmount | number:'1.2-2' }}</strong></div>
       <div><span>TEA</span><strong>{{ op.tea * 100 | number:'1.2-2' }}%</strong></div>
-      <div><span>Cuota constante</span><strong>S/ {{ op.installmentAmount | number:'1.2-2' }}</strong></div>
+      <div><span>Cuota constante</span><strong>{{ symbolFor(op.currency) }} {{ op.installmentAmount | number:'1.2-2' }}</strong></div>
       <div><span>N° cuotas</span><strong>{{ op.totalPeriods }}</strong></div>
+      <div><span>VAN</span><strong>{{ symbolFor(op.currency) }} {{ op.van | number:'1.2-2' }}</strong></div>
+      <div><span>TIR</span><strong>{{ op.tir * 100 | number:'1.2-2' }}%</strong></div>
     </div>
 
     <div class="tabla-card">
       <table class="tabla-cronograma">
         <thead>
         <tr>
-          <th>N°</th><th>Fecha</th><th>Saldo inicial</th><th>Interés</th>
-          <th>Amortización</th><th>Seguro</th><th>Cuota</th><th>Saldo final</th>
+          <th>N°</th><th>TEA</th><th>TES</th><th>Plazo Gracia</th><th>Saldo Inicial</th>
+          <th>Interés</th><th>Cuota</th><th>Amort.</th><th>Saldo Final</th>
         </tr>
         </thead>
         <tbody>
           @for (cuota of op.schedule; track cuota.number) {
-            <tr [class.fila-gracia]="cuota.isGracePeriod">
+            <tr>
               <td>{{ cuota.number }}</td>
-              <td>{{ cuota.dueDate | date:'dd/MM/yyyy' }}</td>
-              <td>S/ {{ cuota.initialBalance | number:'1.2-2' }}</td>
-              <td>S/ {{ cuota.interest | number:'1.2-2' }}</td>
-              <td>S/ {{ cuota.amortization | number:'1.2-2' }}</td>
-              <td>S/ {{ cuota.insurance | number:'1.2-2' }}</td>
-              <td>S/ {{ cuota.installmentAmount | number:'1.2-2' }}</td>
-              <td>S/ {{ cuota.finalBalance | number:'1.2-2' }}</td>
+              <td>{{ op.tea * 100 | number:'1.2-2' }}%</td>
+              <td>{{ op.periodicRate * 100 | number:'1.7-7' }}%</td>
+              <td>{{ cuota.isGracePeriod ? 'S' : 'N' }}</td>
+              <td>{{ cuota.initialBalance | number:'1.2-2' }}</td>
+              <td class="valor-salida">({{ cuota.interest | number:'1.2-2' }})</td>
+              <td class="valor-salida">({{ cuota.installmentAmount | number:'1.2-2' }})</td>
+              <td class="valor-salida">({{ cuota.amortization | number:'1.2-2' }})</td>
+              <td>{{ cuota.finalBalance | number:'1.2-2' }}</td>
             </tr>
           }
         </tbody>

@@ -14,14 +14,33 @@
 
   <section class="tarjeta">
     <h3>Tipo de cambio</h3>
-    <p class="descripcion">1 USD equivale a cuántos soles. Se usa para convertir el precio de vehículos registrados en dólares dentro del simulador.</p>
-    <input
-      type="number"
-      step="0.01"
-      min="0"
-      [value]="store.exchangeRate()"
-      (change)="store.setExchangeRate($any($event.target).valueAsNumber)"
-    />
+    <p class="descripcion">
+      Define cuántos soles equivalen a 1 dólar. Se usa para convertir el precio de vehículos
+      registrados en una moneda distinta a la seleccionada.
+    </p>
+
+    <div class="tipo-cambio" [class.bloqueado]="!exchangeRateEditable()">
+      <div class="tipo-cambio-campo">
+        <span class="tipo-cambio-fijo">1 USD</span>
+        <span class="tipo-cambio-igual">=</span>
+        <input
+          type="number"
+          step="0.01"
+          min="0"
+          [value]="store.exchangeRate()"
+          [disabled]="!exchangeRateEditable()"
+          (change)="onExchangeRateChange($event)"
+        />
+        <span class="tipo-cambio-fijo">PEN</span>
+      </div>
+
+      @if (!exchangeRateEditable()) {
+        <p class="tipo-cambio-hint">
+          <mat-icon>lock</mat-icon>
+          Cambia la moneda a <strong>Dólares</strong> para editar el tipo de cambio.
+        </p>
+      }
+    </div>
   </section>
 
   <section class="tarjeta">

@@ -26,6 +26,7 @@ export interface CreditSimulationInput {
   graceType: import('./grace-type').GraceType;
   graceMonths: number;
   monthlyInsurance: number;
+  discountRate: number; // COK anual, en % (ej: 10 = 10%)
   startDate?: Date;
 }
 
@@ -39,4 +40,7 @@ export interface CreditSimulationResult {
   totalPeriods: number;
   gracePeriods: number;
   schedule: Installment[];
+  van: number; // Valor Actual Neto, desde el punto de vista del deudor
+  tir: number; // TIR anualizada (decimal), comparable al TEA
+  discountRate: number; // COK anual usado (decimal)
 }

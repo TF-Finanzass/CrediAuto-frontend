@@ -25,6 +25,9 @@
 .resumen-resultado span { font-size: 11px; color: #94a3b8; }
 .resumen-resultado strong { font-size: 15px; color: #f1f5f9; }
 
+.ayuda-guardar { margin: 0; font-size: 12.5px; color: #94a3b8; }
+.ayuda-guardar strong { color: #cbd5e1; }
+
 .tabla-cronograma { width: 100%; border-collapse: collapse; font-size: 12px; }
 .tabla-cronograma th, .tabla-cronograma td {
   padding: 8px; text-align: right; border-bottom: 1px solid #334155; color: #e2e8f0;
