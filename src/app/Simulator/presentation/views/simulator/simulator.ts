@@ -5,15 +5,15 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { DecimalPipe } from '@angular/common';
 import { ClientsStore } from '../../../../Clients/application/clients.store';
 import { CarsStore } from '../../../../Cars/application/cars.store';
 import { FrenchAmortizationService } from '../../../application/services/french-amortization.service';
 import { CreditSimulationResult } from '../../../domain/model/installment';
 import { RateType } from '../../../domain/model/rate-type';
-import { GraceType } from '../../../domain/model/grace-type';
 import { PaymentFrequency } from '../../../domain/model/payment-frequency';
+import { defaultFinalInstallmentPercent } from '../../../domain/model/plan-type';
 import { SchedulesStore } from '../../../../Schedules/application/schedules.store';
 import { ConfigurationStore } from '../../../../Configuration/application/configuration.store';
 import { Currency, currencySymbol } from '../../../../Configuration/domain/model/currency';
@@ -26,7 +26,7 @@ import { Currency, currencySymbol } from '../../../../Configuration/domain/model
     MatInputModule,
     MatSelectModule,
     MatButtonModule,
-    MatButtonToggleModule,
+    MatCheckboxModule,
     DecimalPipe,
   ],
   templateUrl: './simulator.html',
@@ -43,7 +43,6 @@ export class Simulator {
   configStore = inject(ConfigurationStore);
 
   rateTypes = Object.values(RateType);
-  graceTypes = Object.values(GraceType);
   frequencies = Object.values(PaymentFrequency);
 
   result = signal<CreditSimulationResult | null>(null);
@@ -52,8 +51,6 @@ export class Simulator {
   selectedCarCurrency = signal<Currency | null>(null);
 
   guardando = signal(false);
-
-  /** Marca si el resultado mostrado quedó desactualizado por un cambio de moneda/tipo de cambio. */
   resultadoDesactualizado = signal(false);
 
   form = this.fb.group({
@@ -65,16 +62,38 @@ export class Simulator {
     annualRate: [18, [Validators.required, Validators.min(0)]],
     capitalization: [PaymentFrequency.Mensual],
     paymentFrequency: [PaymentFrequency.Mensual, Validators.required],
-    termMonths: [48, [Validators.required, Validators.min(1)]],
-    graceType: [GraceType.Sin, Validators.required],
-    graceMonths: [0, [Validators.min(0)]],
-    monthlyInsurance: [0, [Validators.min(0)]],
+    termMonths: [36, [Validators.required, Validators.min(1)]],
+
+    useAutoFinalInstallment: [true],
+    finalInstallmentPercent: [
+      { value: 40, disabled: true },
+      [Validators.min(0), Validators.max(100)],
+    ],
+
+    graceTotalMonths: [0, [Validators.min(0)]],
+    gracePartialMonths: [0, [Validators.min(0)]],
+
+    initialCosts: this.fb.group({
+      notarial: [0, [Validators.min(0)]],
+      registration: [0, [Validators.min(0)]],
+      appraisal: [0, [Validators.min(0)]],
+      studyFee: [0, [Validators.min(0)]],
+      activationFee: [0, [Validators.min(0)]],
+    }),
+
+    periodicCharges: this.fb.group({
+      gps: [0, [Validators.min(0)]],
+      postage: [0, [Validators.min(0)]],
+      administrativeFee: [0, [Validators.min(0)]],
+    }),
+
+    desgravamenInsurancePercent: [0.049, [Validators.min(0)]],
+    riskInsurancePercent: [0.3, [Validators.min(0)]],
+
     discountRate: [10, [Validators.required, Validators.min(0)]],
   });
 
   constructor() {
-    // Reacciona a cambios de moneda global o de tipo de cambio (configStore.currency() / exchangeRate()
-    // se leen dentro de convert()), y reconvierte el precio del vehículo desde su moneda original.
     effect(() => {
       const target = this.configStore.currency();
       const carCurrency = this.selectedCarCurrency();
@@ -87,14 +106,32 @@ export class Simulator {
       const convertedPrice = this.configStore.convert(car.price, carCurrency, target);
       this.form.patchValue({ vehiclePrice: convertedPrice }, { emitEvent: false });
 
-      // El cronograma/VAN/TIR ya calculados quedaron en la moneda anterior: los marcamos obsoletos.
       if (this.result()) {
         this.resultadoDesactualizado.set(true);
       }
     });
+
+    // Mantiene el % de cuota final sugerido sincronizado con el plazo mientras esté en modo automático.
+    this.form.controls.termMonths.valueChanges.subscribe((term) => {
+      if (this.form.value.useAutoFinalInstallment && term) {
+        this.form.controls.finalInstallmentPercent.setValue(defaultFinalInstallmentPercent(term), {
+          emitEvent: false,
+        });
+      }
+    });
+
+    this.form.controls.useAutoFinalInstallment.valueChanges.subscribe((auto) => {
+      const control = this.form.controls.finalInstallmentPercent;
+      if (auto) {
+        const term = this.form.value.termMonths ?? 36;
+        control.setValue(defaultFinalInstallmentPercent(term), { emitEvent: false });
+        control.disable({ emitEvent: false });
+      } else {
+        control.enable({ emitEvent: false });
+      }
+    });
   }
 
-  /** Cuando eligen un vehículo, convierte su precio a la moneda global y autocompleta el campo. */
   onCarSelected(carId: number): void {
     const car = this.carsStore.cars().find((c) => c.id === carId);
     if (!car) return;
@@ -122,9 +159,23 @@ export class Simulator {
       capitalization: v.capitalization!,
       paymentFrequency: v.paymentFrequency!,
       termMonths: v.termMonths!,
-      graceType: v.graceType!,
-      graceMonths: v.graceMonths ?? 0,
-      monthlyInsurance: v.monthlyInsurance ?? 0,
+      finalInstallmentPercent: v.useAutoFinalInstallment ? undefined : v.finalInstallmentPercent!,
+      graceTotalMonths: v.graceTotalMonths ?? 0,
+      gracePartialMonths: v.gracePartialMonths ?? 0,
+      initialCosts: {
+        notarial: v.initialCosts!.notarial ?? 0,
+        registration: v.initialCosts!.registration ?? 0,
+        appraisal: v.initialCosts!.appraisal ?? 0,
+        studyFee: v.initialCosts!.studyFee ?? 0,
+        activationFee: v.initialCosts!.activationFee ?? 0,
+      },
+      periodicCharges: {
+        gps: v.periodicCharges!.gps ?? 0,
+        postage: v.periodicCharges!.postage ?? 0,
+        administrativeFee: v.periodicCharges!.administrativeFee ?? 0,
+      },
+      desgravamenInsurancePercent: v.desgravamenInsurancePercent ?? 0,
+      riskInsurancePercent: v.riskInsurancePercent ?? 0,
       discountRate: v.discountRate!,
     });
     this.result.set(result);
@@ -141,6 +192,8 @@ export class Simulator {
 
     this.guardando.set(true);
 
+    const v = this.form.getRawValue();
+
     this.schedulesStore.addOperation(
       {
         clientId: client.id,
@@ -148,12 +201,29 @@ export class Simulator {
         carId: car.id,
         carLabel: `${car.brand} ${car.model} ${car.year}`,
         currency: this.configStore.currency(),
-        financedAmount: r.financedAmount,
+        loanAmount: r.loanAmount,
+        finalInstallmentAmount: r.finalInstallmentAmount,
+        netFinancedBalance: r.netFinancedBalance,
         tea: r.tea,
         periodicRate: r.periodicRate,
         installmentAmount: r.installmentAmount,
         totalPeriods: r.totalPeriods,
-        gracePeriods: r.gracePeriods,
+        graceTotalPeriods: r.graceTotalPeriods,
+        gracePartialPeriods: r.gracePartialPeriods,
+        initialCosts: {
+          notarial: v.initialCosts!.notarial ?? 0,
+          registration: v.initialCosts!.registration ?? 0,
+          appraisal: v.initialCosts!.appraisal ?? 0,
+          studyFee: v.initialCosts!.studyFee ?? 0,
+          activationFee: v.initialCosts!.activationFee ?? 0,
+        },
+        periodicCharges: {
+          gps: v.periodicCharges!.gps ?? 0,
+          postage: v.periodicCharges!.postage ?? 0,
+          administrativeFee: v.periodicCharges!.administrativeFee ?? 0,
+        },
+        desgravamenInsurancePercent: v.desgravamenInsurancePercent ?? 0,
+        riskInsurancePercent: v.riskInsurancePercent ?? 0,
         schedule: r.schedule,
         van: r.van,
         tir: r.tir,
@@ -176,10 +246,15 @@ export class Simulator {
       annualRate: 18,
       capitalization: PaymentFrequency.Mensual,
       paymentFrequency: PaymentFrequency.Mensual,
-      termMonths: 48,
-      graceType: GraceType.Sin,
-      graceMonths: 0,
-      monthlyInsurance: 0,
+      termMonths: 36,
+      useAutoFinalInstallment: true,
+      finalInstallmentPercent: 40,
+      graceTotalMonths: 0,
+      gracePartialMonths: 0,
+      initialCosts: { notarial: 0, registration: 0, appraisal: 0, studyFee: 0, activationFee: 0 },
+      periodicCharges: { gps: 0, postage: 0, administrativeFee: 0 },
+      desgravamenInsurancePercent: 0.049,
+      riskInsurancePercent: 0.3,
       discountRate: 10,
     });
     this.result.set(null);
@@ -188,5 +263,4 @@ export class Simulator {
   }
 
   protected readonly RateType = RateType;
-  protected readonly GraceType = GraceType;
 }

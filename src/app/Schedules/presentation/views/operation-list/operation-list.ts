@@ -50,8 +50,9 @@ export class OperationList {
   displayedColumns = [
     'client',
     'car',
-    'financedAmount',
+    'loanAmount',
     'installmentAmount',
+    'finalInstallmentAmount',
     'totalPeriods',
     'createdAt',
     'actions',

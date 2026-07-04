@@ -107,3 +107,6 @@
 ::ng-deep .simulador .mat-button-toggle-label-content {
   line-height: 40px !important;
 }
+
+.fila-checkbox { align-items: center; gap: 20px; }
+.fila-checkbox mat-checkbox { flex: 2; min-width: 260px; }

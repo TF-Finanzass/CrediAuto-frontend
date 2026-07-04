@@ -57,16 +57,16 @@
     } @else {
       <table class="tabla-operaciones">
         <thead>
-        <tr><th>Cliente</th><th>Vehículo</th><th>Monto</th><th>Cuota</th><th></th></tr>
+        <tr><th>Cliente</th><th>Vehículo</th><th>Préstamo</th><th>Cuota</th><th></th></tr>
         </thead>
         <tbody>
           @for (op of recentOperations(); track op.id) {
             <tr>
               <td>{{ op.clientName }}</td>
               <td>{{ op.carLabel }}</td>
-              <td>S/ {{ op.financedAmount | number:'1.0-0' }}</td>
+              <td>S/ {{ op.loanAmount | number:'1.0-0' }}</td>
               <td>S/ {{ op.installmentAmount | number:'1.2-2' }}</td>
-              <td><a [routerLink]="['/schedules', op.id]">Ver</a></td>  <!-- ← esta línea -->
+              <td><a [routerLink]="['/schedules', op.id]">Ver</a></td>
             </tr>
           }
         </tbody>
