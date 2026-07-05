@@ -1,11 +1,11 @@
 <div class="simulador">
   <header class="encabezado">
-    <h2>Simulador — Compra Inteligente</h2>
+    <h2>{{ 'simulator.title' | translate }}</h2>
     <div class="acciones-header">
-      <button mat-stroked-button (click)="limpiar()">Limpiar</button>
-      <button mat-flat-button color="primary" (click)="calcular()">Calcular</button>
+      <button mat-stroked-button (click)="limpiar()">{{ 'simulator.clean-button' | translate }}</button>
+      <button mat-flat-button color="primary" (click)="calcular()">{{ 'simulator.calculate-button' | translate }}</button>
       <button mat-stroked-button (click)="guardar()" [disabled]="!result() || guardando()">
-        {{ guardando() ? 'Guardando…' : 'Guardar' }}
+        {{ guardando() ? ('simulator.saving-button' | translate) : ('simulator.save-button' | translate) }}
       </button>
     </div>
   </header>
@@ -13,10 +13,10 @@
   <form [formGroup]="form">
 
     <section class="tarjeta">
-      <h3>1. Cliente y vehículo</h3>
+      <h3>{{ 'simulator.section.client-car.title' | translate }}</h3>
       <div class="fila">
         <mat-form-field appearance="outline">
-          <mat-label>Cliente registrado</mat-label>
+          <mat-label>{{ 'simulator.section.client-car.client-label' | translate }}</mat-label>
           <mat-select formControlName="clientId">
             @for (client of clientsStore.clients(); track client.id) {
               <mat-option [value]="client.id">{{ client.fullName }} {{ client.lastName }} — DNI {{ client.documentNumber }}</mat-option>
@@ -25,7 +25,7 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Vehículo seleccionado</mat-label>
+          <mat-label>{{ 'simulator.section.client-car.car-label' | translate }}</mat-label>
           <mat-select formControlName="carId" (selectionChange)="onCarSelected($event.value)">
             @for (car of carsStore.cars(); track car.id) {
               <mat-option [value]="car.id">{{ car.brand }} {{ car.model }} {{ car.year }} — {{ currencySymbol[car.currency] }} {{ car.price | number }}</mat-option>
@@ -36,46 +36,46 @@
     </section>
 
     <section class="tarjeta">
-      <h3>2. Configuración del crédito</h3>
+      <h3>{{ 'simulator.section.credit-config.title' | translate }}</h3>
       <div class="fila">
         <mat-form-field appearance="outline">
-          <mat-label>Precio del vehículo ({{ configStore.symbol() }})</mat-label>
+          <mat-label>{{ 'simulator.section.credit-config.vehicle-price-label' | translate }} ({{ configStore.symbol() }})</mat-label>
           <input matInput type="number" formControlName="vehiclePrice">
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Cuota inicial (%)</mat-label>
+          <mat-label>{{ 'simulator.section.credit-config.down-payment-label' | translate }}</mat-label>
           <input matInput type="number" formControlName="downPaymentPercent">
         </mat-form-field>
       </div>
 
       @if (selectedCarCurrency() && selectedCarCurrency() !== configStore.currency()) {
-        <p class="ayuda-guardar">
-          Precio convertido de {{ selectedCarCurrency() }} a {{ configStore.currency() }} al tipo de cambio {{ configStore.exchangeRate() | number:'1.2-2' }}.
+        <p class="ayuda-guardar aviso-conversion">
+          {{ 'simulator.conversion-notice' | translate: { from: selectedCarCurrency(), to: configStore.currency(), rate: (configStore.exchangeRate() | number:'1.2-2') } }}
         </p>
       }
 
       <div class="fila">
         <mat-form-field appearance="outline">
-          <mat-label>Tipo de tasa</mat-label>
+          <mat-label>{{ 'simulator.section.credit-config.rate-type-label' | translate }}</mat-label>
           <mat-select formControlName="rateType">
             @for (rt of rateTypes; track rt) {
-              <mat-option [value]="rt">{{ rt }}</mat-option>
+              <mat-option [value]="rt">{{ 'rate-type.' + rateTypeKey(rt) | translate }}</mat-option>
             }
           </mat-select>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Tasa de interés anual (%)</mat-label>
+          <mat-label>{{ 'simulator.section.credit-config.annual-rate-label' | translate }}</mat-label>
           <input matInput type="number" formControlName="annualRate">
         </mat-form-field>
 
         @if (form.value.rateType === RateType.Nominal) {
           <mat-form-field appearance="outline">
-            <mat-label>Capitalización</mat-label>
+            <mat-label>{{ 'simulator.section.credit-config.capitalization-label' | translate }}</mat-label>
             <mat-select formControlName="capitalization">
               @for (freq of capitalizationFrequencies; track freq) {
-                <mat-option [value]="freq">{{ freq }}</mat-option>
+                <mat-option [value]="freq">{{ 'frequency.' + frequencyKey(freq) | translate }}</mat-option>
               }
             </mat-select>
           </mat-form-field>
@@ -84,114 +84,110 @@
 
       <div class="fila">
         <mat-form-field appearance="outline">
-          <mat-label>Frecuencia de pago</mat-label>
+          <mat-label>{{ 'simulator.section.credit-config.payment-frequency-label' | translate }}</mat-label>
           <mat-select formControlName="paymentFrequency">
             @for (freq of frequencies; track freq) {
-              <mat-option [value]="freq">{{ freq }}</mat-option>
+              <mat-option [value]="freq">{{ 'frequency.' + frequencyKey(freq) | translate }}</mat-option>
             }
           </mat-select>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Plazo (meses)</mat-label>
+          <mat-label>{{ 'simulator.section.credit-config.term-months-label' | translate }}</mat-label>
           <input matInput type="number" formControlName="termMonths">
         </mat-form-field>
       </div>
     </section>
 
     <section class="tarjeta">
-      <h3>3. Cuota final (Cuotón)</h3>
+      <h3>{{ 'simulator.section.final-installment.title' | translate }}</h3>
       <div class="fila fila-checkbox">
         <mat-checkbox formControlName="useAutoFinalInstallment">
-          Calcular automáticamente según el plazo (24 meses → 50%, otros → 40%)
+          {{ 'simulator.section.final-installment.auto-checkbox' | translate }}
         </mat-checkbox>
 
         <mat-form-field appearance="outline">
-          <mat-label>% Cuota final</mat-label>
+          <mat-label>{{ 'simulator.section.final-installment.percent-label' | translate }}</mat-label>
           <input matInput type="number" formControlName="finalInstallmentPercent">
         </mat-form-field>
       </div>
     </section>
 
     <section class="tarjeta">
-      <h3>4. Periodo de gracia</h3>
+      <h3>{{ 'simulator.section.grace-period.title' | translate }}</h3>
       <div class="fila">
         <mat-form-field appearance="outline">
-          <mat-label>Meses de gracia total (no se paga nada)</mat-label>
+          <mat-label>{{ 'simulator.section.grace-period.total-months-label' | translate }}</mat-label>
           <input matInput type="number" formControlName="graceTotalMonths">
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Meses de gracia parcial (solo interés)</mat-label>
+          <mat-label>{{ 'simulator.section.grace-period.partial-months-label' | translate }}</mat-label>
           <input matInput type="number" formControlName="gracePartialMonths">
         </mat-form-field>
       </div>
-      <p class="ayuda-guardar">
-        La gracia total se aplica primero (interés se capitaliza); la gracia parcial corre justo
-        después (solo se paga interés + seguro de desgravamen). Ambas son opcionales.
-      </p>
     </section>
 
     <section class="tarjeta">
-      <h3>5. Costos iniciales (se suman al monto financiado)</h3>
+      <h3>{{ 'simulator.section.initial-costs.title' | translate }}</h3>
       <div class="fila" formGroupName="initialCosts">
         <mat-form-field appearance="outline">
-          <mat-label>Costes notariales</mat-label>
+          <mat-label>{{ 'simulator.section.initial-costs.notarial-label' | translate }}</mat-label>
           <input matInput type="number" formControlName="notarial">
         </mat-form-field>
         <mat-form-field appearance="outline">
-          <mat-label>Costes registrales</mat-label>
+          <mat-label>{{ 'simulator.section.initial-costs.registration-label' | translate }}</mat-label>
           <input matInput type="number" formControlName="registration">
         </mat-form-field>
         <mat-form-field appearance="outline">
-          <mat-label>Tasación</mat-label>
+          <mat-label>{{ 'simulator.section.initial-costs.appraisal-label' | translate }}</mat-label>
           <input matInput type="number" formControlName="appraisal">
         </mat-form-field>
         <mat-form-field appearance="outline">
-          <mat-label>Comisión de estudio</mat-label>
+          <mat-label>{{ 'simulator.section.initial-costs.study-fee-label' | translate }}</mat-label>
           <input matInput type="number" formControlName="studyFee">
         </mat-form-field>
         <mat-form-field appearance="outline">
-          <mat-label>Comisión de activación</mat-label>
+          <mat-label>{{ 'simulator.section.initial-costs.activation-fee-label' | translate }}</mat-label>
           <input matInput type="number" formControlName="activationFee">
         </mat-form-field>
       </div>
     </section>
 
     <section class="tarjeta">
-      <h3>6. Cargos periódicos y seguros</h3>
+      <h3>{{ 'simulator.section.periodic-charges.title' | translate }}</h3>
       <div class="fila" formGroupName="periodicCharges">
         <mat-form-field appearance="outline">
-          <mat-label>GPS ({{ configStore.symbol() }}/mes)</mat-label>
+          <mat-label>{{ 'simulator.section.periodic-charges.gps-label' | translate }} ({{ configStore.symbol() }} {{ 'simulator.section.periodic-charges.per-month-suffix' | translate }})</mat-label>
           <input matInput type="number" formControlName="gps">
         </mat-form-field>
         <mat-form-field appearance="outline">
-          <mat-label>Portes ({{ configStore.symbol() }}/mes)</mat-label>
+          <mat-label>{{ 'simulator.section.periodic-charges.postage-label' | translate }} ({{ configStore.symbol() }} {{ 'simulator.section.periodic-charges.per-month-suffix' | translate }})</mat-label>
           <input matInput type="number" formControlName="postage">
         </mat-form-field>
         <mat-form-field appearance="outline">
-          <mat-label>Gastos administrativos ({{ configStore.symbol() }}/mes)</mat-label>
+          <mat-label>{{ 'simulator.section.periodic-charges.administrative-fee-label' | translate }} ({{ configStore.symbol() }} {{ 'simulator.section.periodic-charges.per-month-suffix' | translate }})</mat-label>
           <input matInput type="number" formControlName="administrativeFee">
         </mat-form-field>
       </div>
 
       <div class="fila">
         <mat-form-field appearance="outline">
-          <mat-label>Seguro de desgravamen (% mensual sobre saldo)</mat-label>
+          <mat-label>{{ 'simulator.section.periodic-charges.desgravamen-label' | translate }}</mat-label>
           <input matInput type="number" formControlName="desgravamenInsurancePercent">
         </mat-form-field>
         <mat-form-field appearance="outline">
-          <mat-label>Seguro de riesgo (% anual sobre precio del vehículo)</mat-label>
+          <mat-label>{{ 'simulator.section.periodic-charges.risk-label' | translate }}</mat-label>
           <input matInput type="number" formControlName="riskInsurancePercent">
         </mat-form-field>
       </div>
     </section>
 
     <section class="tarjeta">
-      <h3>7. Evaluación financiera</h3>
+      <h3>{{ 'simulator.section.financial-evaluation.title' | translate }}</h3>
       <div class="fila">
         <mat-form-field appearance="outline">
-          <mat-label>Costo de oportunidad — COK (%)</mat-label>
+          <mat-label>{{ 'simulator.section.financial-evaluation.discount-rate-label' | translate }}</mat-label>
           <input matInput type="number" formControlName="discountRate">
         </mat-form-field>
       </div>
@@ -200,28 +196,18 @@
 
   @if (result(); as r) {
     <section class="tarjeta">
-      <h3>8. Resultado de la simulación</h3>
-
-      @if (resultadoDesactualizado()) {
-        <p class="ayuda-guardar" style="color:#fbbf24;">
-          ⚠️ Cambiaste la moneda o el tipo de cambio. Presiona <strong>Calcular</strong> de nuevo para actualizar estos resultados.
-        </p>
-      }
+      <h3>{{ 'simulator.result.title' | translate }}</h3>
 
       <div class="resumen-resultado">
-        <div><span>Monto del préstamo</span><strong>{{ configStore.symbol() }} {{ r.loanAmount | number:'1.2-2' }}</strong></div>
-        <div><span>Saldo a financiar con cuotas</span><strong>{{ configStore.symbol() }} {{ r.netFinancedBalance | number:'1.2-2' }}</strong></div>
-        <div><span>Cuota final (Cuotón)</span><strong>{{ configStore.symbol() }} {{ r.finalInstallmentAmount | number:'1.2-2' }}</strong></div>
-        <div><span>TEA efectiva usada</span><strong>{{ r.tea * 100 | number:'1.2-2' }}%</strong></div>
-        <div><span>Tasa por periodo</span><strong>{{ r.periodicRate * 100 | number:'1.4-4' }}%</strong></div>
-        <div><span>Cuota constante (fase normal)</span><strong>{{ configStore.symbol() }} {{ r.installmentAmount | number:'1.2-2' }}</strong></div>
-        <div><span>VAN</span><strong>{{ configStore.symbol() }} {{ r.van | number:'1.2-2' }}</strong></div>
-        <div><span>TIR</span><strong>{{ r.tir * 100 | number:'1.2-2' }}%</strong></div>
+        <div><span>{{ 'simulator.result.loan-amount' | translate }}</span><strong>{{ configStore.symbol() }} {{ r.loanAmount | number:'1.2-2' }}</strong></div>
+        <div><span>{{ 'simulator.result.net-financed-balance' | translate }}</span><strong>{{ configStore.symbol() }} {{ r.netFinancedBalance | number:'1.2-2' }}</strong></div>
+        <div><span>{{ 'simulator.result.final-installment-amount' | translate }}</span><strong>{{ configStore.symbol() }} {{ r.finalInstallmentAmount | number:'1.2-2' }}</strong></div>
+        <div><span>{{ 'simulator.result.tea' | translate }}</span><strong>{{ r.tea * 100 | number:'1.2-2' }}%</strong></div>
+        <div><span>{{ 'simulator.result.periodic-rate' | translate }}</span><strong>{{ r.periodicRate * 100 | number:'1.4-4' }}%</strong></div>
+        <div><span>{{ 'simulator.result.installment-amount' | translate }}</span><strong>{{ configStore.symbol() }} {{ r.installmentAmount | number:'1.2-2' }}</strong></div>
+        <div><span>{{ 'simulator.result.van' | translate }}</span><strong>{{ configStore.symbol() }} {{ r.van | number:'1.2-2' }}</strong></div>
+        <div><span>{{ 'simulator.result.tir' | translate }}</span><strong>{{ r.tir * 100 | number:'1.2-2' }}%</strong></div>
       </div>
-      <p class="ayuda-guardar">
-        Presiona <strong>Guardar</strong> para generar la operación de crédito. El cronograma
-        detallado de cuotas se visualiza en la sección Cronogramas.
-      </p>
     </section>
   }
 

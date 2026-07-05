@@ -5,10 +5,6 @@ import {CarsApiEndpoint} from '../infrastructure/cars-api-endpoint';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {retry} from 'rxjs';
 
-/**
- * Application service store for managing car catalog state in the 'cars' bounded context.
- * Only supports listing and adding cars.
- */
 @Injectable({providedIn: 'root'})
 export class CarsStore {
   private readonly carsEndpoint: CarsApiEndpoint;
@@ -29,10 +25,6 @@ export class CarsStore {
     this.loadCars();
   }
 
-  /**
-   * Adds a new car to the catalog.
-   * @param car - The car to add.
-   */
   addCar(car: Car): void {
     this.loadingSignal.set(true);
     this.errorSignal.set(null);
@@ -48,9 +40,6 @@ export class CarsStore {
     });
   }
 
-  /**
-   * Loads all cars from the API.
-   */
   private loadCars(): void {
     this.loadingSignal.set(true);
     this.errorSignal.set(null);

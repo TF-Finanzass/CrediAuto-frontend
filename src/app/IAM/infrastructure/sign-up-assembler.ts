@@ -1,6 +1,6 @@
-import {SignUpRequest} from './sign-up.request';
-import {SignUpCommand} from '../domain/model/sign-up.command';
-import {SignUpResource, SignUpResponse} from './sign-up-response';
+import { SignUpRequest } from './sign-up.request';
+import { SignUpCommand } from '../domain/model/sign-up.command';
+import { SignUpResource, SignUpResponse } from './sign-up-response';
 
 export class SignUpAssembler {
   toResourceFromResponse(response: SignUpResponse): SignUpResource {

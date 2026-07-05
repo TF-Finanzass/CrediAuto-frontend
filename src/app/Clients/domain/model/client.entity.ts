@@ -6,10 +6,6 @@ export enum ClientStatus {
   Rechazado = 'Rechazado'
 }
 
-/**
- * Represents a Client entity in the domain layer of the 'clients' bounded context.
- * @see {@link BaseEntity}
- */
 export class Client implements BaseEntity {
   constructor(client: {
     id: number;

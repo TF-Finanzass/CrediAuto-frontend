@@ -1,4 +1,8 @@
 {
+  "app": {
+    "brand-name": "CrediAuto",
+    "brand-tagline": "Vehicle finance system"
+  },
   "option": {
     "home": "Home",
     "dashboard": "Dashboard",
@@ -6,29 +10,66 @@
     "vehicles": "Vehicles",
     "simulator": "Simulation",
     "schedules": "Schedules",
-    "settings": "Settings"
+    "settings": "Settings",
+    "help": "Support"
+  },
+  "auth": {
+    "welcome": "Hola",
+    "sign-out": "Cerrar sesión",
+    "sign-in": "Iniciar sesión",
+    "sign-up": "Registrarse"
+  },
+  "dashboard": {
+    "title": "Dashboard — CrediAuto",
+    "metric": {
+      "schedules-generated": "Schedules generated",
+      "total-simulated": "Total simulated amount",
+      "available-vehicles": "Available vehicles",
+      "avg-tcea": "Average APR"
+    },
+    "car-status": {
+      "title": "Vehicle status",
+      "available": "Available",
+      "reserved": "Reserved",
+      "sold-out": "Sold out"
+    },
+    "client-portfolio": {
+      "title": "Portfolio status",
+      "total": "Total"
+    },
+    "recent-operations": {
+      "title": "Recent operations",
+      "empty": "No schedules have been generated yet.",
+      "view-link": "View",
+      "column": {
+        "client": "Client",
+        "car": "Vehicle",
+        "loan": "Loan",
+        "installment": "Installment"
+      }
+    }
   },
   "cars": {
-    "list-title": "Vehicle Catalog",
+    "list-title": "Vehicle catalog",
     "count-label": "registered vehicles",
     "brand": "Brand",
     "model": "Model",
     "year": "Year",
     "price": "Price",
-    "fuel-type": "Fuel Type",
+    "fuel-type": "Fuel type",
     "transmission": "Transmission",
     "status": "Status",
-    "new": "New Vehicle"
+    "new": "New vehicle"
   },
   "car": {
-    "new-title": "Register Vehicle",
+    "new-title": "Register vehicle",
     "brand": "Brand",
     "model": "Model",
     "year": "Year",
     "price": "Price",
-    "fuel-type": "Fuel Type",
+    "fuel-type": "Fuel type",
     "transmission": "Transmission",
-    "detail": "Details",
+    "detail": "Detail",
     "status": "Status",
     "create": "Register",
     "back": "Back",
@@ -40,29 +81,238 @@
   "clients": {
     "list-title": "Clients",
     "count-label": "registered clients",
-    "full-name": "First Name",
-    "last-name": "Last Name",
-    "document": "National ID",
+    "full-name": "First name",
+    "last-name": "Last name",
+    "document": "ID number",
     "email": "Email",
     "phone": "Phone",
-    "monthly-income": "Monthly Income",
+    "monthly-income": "Monthly income",
     "status": "Status",
-    "new": "New Client"
+    "new": "New client"
   },
   "client": {
-    "new-title": "Register Client",
-    "full-name": "First Name",
-    "last-name": "Last Name",
-    "document": "National ID",
+    "new-title": "Register client",
+    "full-name": "First name",
+    "last-name": "Last name",
+    "document": "ID number",
     "email": "Email",
     "phone": "Phone",
-    "monthly-income": "Monthly Income",
+    "monthly-income": "Monthly income",
     "status": "Status",
     "create": "Register",
     "back": "Back",
     "error": {
       "full-name-required": "First name is required",
-      "email-invalid": "Invalid email address"
+      "email-invalid": "Email is not valid"
     }
+  },
+  "simulator": {
+    "title": "Simulator — Smart Purchase",
+    "clean-button": "Clear",
+    "calculate-button": "Calculate",
+    "save-button": "Save",
+    "saving-button": "Saving…",
+    "section": {
+      "client-car": {
+        "title": "1. Client and vehicle",
+        "client-label": "Registered client",
+        "car-label": "Selected vehicle"
+      },
+      "credit-config": {
+        "title": "2. Credit configuration",
+        "vehicle-price-label": "Vehicle price",
+        "down-payment-label": "Down payment (%)",
+        "rate-type-label": "Rate type",
+        "annual-rate-label": "Annual interest rate (%)",
+        "capitalization-label": "Compounding",
+        "payment-frequency-label": "Payment frequency",
+        "term-months-label": "Term (months)"
+      },
+      "final-installment": {
+        "title": "3. Balloon payment",
+        "auto-checkbox": "Calculate automatically based on term (24 months → 50%, other → 40%)",
+        "percent-label": "Balloon payment %"
+      },
+      "grace-period": {
+        "title": "4. Grace period",
+        "total-months-label": "Full grace months (nothing is paid)",
+        "partial-months-label": "Partial grace months (interest only)"
+      },
+      "initial-costs": {
+        "title": "5. Initial costs (added to the financed amount)",
+        "notarial-label": "Notarial fees",
+        "registration-label": "Registration fees",
+        "appraisal-label": "Appraisal",
+        "study-fee-label": "Study fee",
+        "activation-fee-label": "Activation fee"
+      },
+      "periodic-charges": {
+        "title": "6. Periodic charges and insurance",
+        "gps-label": "GPS",
+        "postage-label": "Postage",
+        "administrative-fee-label": "Administrative fees",
+        "per-month-suffix": "per month",
+        "desgravamen-label": "Life insurance (% monthly on balance)",
+        "risk-label": "Risk insurance (% annual on vehicle price)"
+      },
+      "financial-evaluation": {
+        "title": "7. Financial evaluation",
+        "discount-rate-label": "Opportunity cost — COK (%)"
+      }
+    },
+    "conversion-notice": "Price converted from {{from}} to {{to}} at exchange rate {{rate}}.",
+    "result": {
+      "title": "8. Simulation result",
+      "loan-amount": "Loan amount",
+      "net-financed-balance": "Balance financed with installments",
+      "final-installment-amount": "Balloon payment",
+      "tea": "APR used",
+      "periodic-rate": "Rate per period",
+      "installment-amount": "Fixed installment (regular phase)",
+      "van": "NPV",
+      "tir": "IRR"
+    }
+  },
+  "rate-type": {
+    "effective": "Effective (APR)",
+    "nominal": "Nominal (Annual Rate)"
+  },
+  "frequency": {
+    "daily": "Daily",
+    "monthly": "Monthly",
+    "bimonthly": "Bimonthly",
+    "quarterly": "Quarterly",
+    "four-monthly": "Four-monthly",
+    "semiannual": "Semiannual",
+    "annual": "Annual"
+  },
+  "schedules": {
+    "list": {
+      "title": "Payment schedules",
+      "count-label": "operations",
+      "filter-label": "Filter by client",
+      "filter-all": "All clients",
+      "view-button": "View schedule",
+      "empty": "No operations registered yet.",
+      "column": {
+        "client": "Client",
+        "car": "Vehicle",
+        "loan-amount": "Loan",
+        "installment-amount": "Installment",
+        "final-installment-amount": "Balloon payment",
+        "total-periods": "No. of installments",
+        "created-at": "Created",
+        "actions": "Actions"
+      }
+    },
+    "detail": {
+      "back": "Back",
+      "title-prefix": "Schedule —",
+      "created-on": "Created on",
+      "not-found": "Operation not found.",
+      "summary": {
+        "loan-amount": "Loan amount",
+        "net-financed-balance": "Financed balance",
+        "final-installment-amount": "Balloon payment",
+        "tea": "APR",
+        "installment-amount": "Fixed installment",
+        "total-periods": "No. of installments",
+        "van": "NPV",
+        "tir": "IRR"
+      },
+      "table": {
+        "group": {
+          "final-installment": "Balloon Payment Schedule",
+          "regular-installment": "Regular Installment Schedule",
+          "operation-costs": "Operation Costs"
+        },
+        "column": {
+          "number": "No.",
+          "type": "Type",
+          "initial-balance": "Initial Balance",
+          "interest": "Interest",
+          "amortization": "Amort.",
+          "desgravamen-insurance": "Life Insurance",
+          "final-balance": "Final Balance",
+          "installment": "Installment",
+          "risk-insurance": "Risk Insurance",
+          "gps": "GPS",
+          "postage": "Postage",
+          "administrative-fee": "Admin. Fees",
+          "total-cuota": "Total Payment"
+        }
+      }
+    }
+  },
+  "configuration": {
+    "title": "Settings",
+    "currency": {
+      "title": "Currency",
+      "pen": "S/ Soles",
+      "usd": "$ Dollars"
+    },
+    "exchange-rate": {
+      "title": "Exchange rate"
+    },
+    "language": {
+      "title": "Language"
+    }
+  },
+  "help": {
+    "title": "Help & Support",
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "q1": {
+        "question": "How do I calculate a new credit?",
+        "answer": "Go to the Simulator section, fill in the client, vehicle, and credit details, then click Calculate. Once you're happy with the result, click Save to generate the schedule."
+      },
+      "q2": {
+        "question": "What is the Balloon payment?",
+        "answer": "It's an extra payment at the end of the credit (Smart Purchase style), calculated as a percentage of the vehicle price, that grows with interest throughout the term and is paid together with the last installment."
+      },
+      "q3": {
+        "question": "What does the grace period mean?",
+        "answer": "It's a period at the start of the credit where no regular installment is paid. Full grace charges nothing (interest is compounded); partial grace only charges interest and life insurance."
+      },
+      "q4": {
+        "question": "How do I change the currency or exchange rate?",
+        "answer": "In Settings you can choose Soles or Dollars as the active currency, and edit the exchange rate (only available when the active currency is Dollars)."
+      },
+      "q5": {
+        "question": "Can I view the schedule after saving it?",
+        "answer": "Yes, in the Schedules section you'll find all saved operations. Click \"View schedule\" to see the full installment detail for each one."
+      }
+    },
+    "contact": {
+      "title": "Need more help?",
+      "description": "If your question isn't covered in the FAQ, reach out to us through any of these channels:",
+      "email-label": "Support email",
+      "phone-label": "Phone",
+      "hours-label": "Business hours",
+      "hours-value": "Monday to Friday, 9:00 a.m. – 6:00 p.m.",
+      "form": {
+        "title": "Contact us",
+        "name-label": "Name",
+        "name-placeholder": "Your full name",
+        "email-label": "Email",
+        "email-placeholder": "you@email.com",
+        "message-label": "Message",
+        "message-placeholder": "Tell us what you need...",
+        "submit-button": "Send",
+        "required-error": "This field is required",
+        "email-invalid-error": "Enter a valid email",
+        "success-message": "Thanks for reaching out! We've received your message and will get back to you as soon as possible."
+      }
+    }
+  },
+  "not-found": {
+    "title": "Page not found",
+    "description": "The page you're looking for doesn't exist or was moved.",
+    "button": "Back to Dashboard"
+  },
+  "unauthorized": {
+    "title": "Access restricted",
+    "description": "Your account doesn't have permission to view this section. If you think this is a mistake, contact support.",
+    "sign-out": "Sign out"
   }
 }

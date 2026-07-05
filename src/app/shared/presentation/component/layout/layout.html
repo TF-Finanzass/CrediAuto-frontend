@@ -1,6 +1,8 @@
 <div class="layout">
-  <app-nav-sidebar/>
-  <div class="main">
+  @if (showSidebar()) {
+    <app-nav-sidebar/>
+  }
+  <div class="main" [class.main-auth]="isAuthRouteForPadding()">
     <router-outlet/>
   </div>
 </div>

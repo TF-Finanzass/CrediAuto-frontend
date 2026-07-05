@@ -1,4 +1,8 @@
 {
+  "app": {
+    "brand-name": "CrediAuto",
+    "brand-tagline": "Sistema financiero vehicular"
+  },
   "option": {
     "home": "Home",
     "dashboard": "Dashboard",
@@ -6,7 +10,44 @@
     "vehicles": "Vehiculos",
     "simulator": "Simulación",
     "schedules": "Cronogramas",
-    "settings": "Configuración"
+    "settings": "Configuración",
+    "help": "Soporte"
+  },
+  "auth": {
+    "welcome": "Hi",
+    "sign-out": "Sign-Out",
+    "sign-in": "Sign-In",
+    "sign-up": "Sign-Up"
+  },
+  "dashboard": {
+    "title": "Dashboard — CrediAuto",
+    "metric": {
+      "schedules-generated": "Cronogramas generados",
+      "total-simulated": "Monto total simulado",
+      "available-vehicles": "Vehículos disponibles",
+      "avg-tcea": "TCEA promedio"
+    },
+    "car-status": {
+      "title": "Estado de vehículos",
+      "available": "Disponible",
+      "reserved": "Reservado",
+      "sold-out": "Agotado"
+    },
+    "client-portfolio": {
+      "title": "Estado de cartera",
+      "total": "Total"
+    },
+    "recent-operations": {
+      "title": "Últimas operaciones",
+      "empty": "Aún no se han generado cronogramas.",
+      "view-link": "Ver",
+      "column": {
+        "client": "Cliente",
+        "car": "Vehículo",
+        "loan": "Préstamo",
+        "installment": "Cuota"
+      }
+    }
   },
   "cars": {
     "list-title": "Catálogo de vehículos",
@@ -64,5 +105,214 @@
       "full-name-required": "El nombre es obligatorio",
       "email-invalid": "El correo no es válido"
     }
+  },
+  "simulator": {
+    "title": "Simulador — Compra Inteligente",
+    "clean-button": "Limpiar",
+    "calculate-button": "Calcular",
+    "save-button": "Guardar",
+    "saving-button": "Guardando…",
+    "section": {
+      "client-car": {
+        "title": "1. Cliente y vehículo",
+        "client-label": "Cliente registrado",
+        "car-label": "Vehículo seleccionado"
+      },
+      "credit-config": {
+        "title": "2. Configuración del crédito",
+        "vehicle-price-label": "Precio del vehículo",
+        "down-payment-label": "Cuota inicial (%)",
+        "rate-type-label": "Tipo de tasa",
+        "annual-rate-label": "Tasa de interés anual (%)",
+        "capitalization-label": "Capitalización",
+        "payment-frequency-label": "Frecuencia de pago",
+        "term-months-label": "Plazo (meses)"
+      },
+      "final-installment": {
+        "title": "3. Cuota final (Cuotón)",
+        "auto-checkbox": "Calcular automáticamente según el plazo (24 meses → 50%, otros → 40%)",
+        "percent-label": "% Cuota final"
+      },
+      "grace-period": {
+        "title": "4. Periodo de gracia",
+        "total-months-label": "Meses de gracia total (no se paga nada)",
+        "partial-months-label": "Meses de gracia parcial (solo interés)"
+      },
+      "initial-costs": {
+        "title": "5. Costos iniciales (se suman al monto financiado)",
+        "notarial-label": "Costes notariales",
+        "registration-label": "Costes registrales",
+        "appraisal-label": "Tasación",
+        "study-fee-label": "Comisión de estudio",
+        "activation-fee-label": "Comisión de activación"
+      },
+      "periodic-charges": {
+        "title": "6. Cargos periódicos y seguros",
+        "gps-label": "GPS",
+        "postage-label": "Portes",
+        "administrative-fee-label": "Gastos administrativos",
+        "per-month-suffix": "por mes",
+        "desgravamen-label": "Seguro de desgravamen (% mensual sobre saldo)",
+        "risk-label": "Seguro de riesgo (% anual sobre precio del vehículo)"
+      },
+      "financial-evaluation": {
+        "title": "7. Evaluación financiera",
+        "discount-rate-label": "Costo de oportunidad — COK (%)"
+      }
+    },
+    "conversion-notice": "Precio convertido de {{from}} a {{to}} al tipo de cambio {{rate}}.",
+    "result": {
+      "title": "8. Resultado de la simulación",
+      "loan-amount": "Monto del préstamo",
+      "net-financed-balance": "Saldo a financiar con cuotas",
+      "final-installment-amount": "Cuota final (Cuotón)",
+      "tea": "TEA efectiva usada",
+      "periodic-rate": "Tasa por periodo",
+      "installment-amount": "Cuota constante (fase normal)",
+      "van": "VAN",
+      "tir": "TIR"
+    }
+  },
+  "rate-type": {
+    "effective": "Efectiva (TEA)",
+    "nominal": "Nominal (TNA)"
+  },
+  "frequency": {
+    "daily": "Diaria",
+    "monthly": "Mensual",
+    "bimonthly": "Bimestral",
+    "quarterly": "Trimestral",
+    "four-monthly": "Cuatrimestral",
+    "semiannual": "Semestral",
+    "annual": "Anual"
+  },
+  "schedules": {
+    "list": {
+      "title": "Cronogramas de pago",
+      "count-label": "operaciones",
+      "filter-label": "Filtrar por cliente",
+      "filter-all": "Todos los clientes",
+      "view-button": "Ver cronograma",
+      "empty": "No hay operaciones registradas todavía.",
+      "column": {
+        "client": "Cliente",
+        "car": "Vehículo",
+        "loan-amount": "Préstamo",
+        "installment-amount": "Cuota",
+        "final-installment-amount": "Cuotón",
+        "total-periods": "N° cuotas",
+        "created-at": "Creado",
+        "actions": "Acciones"
+      }
+    },
+    "detail": {
+      "back": "Volver",
+      "title-prefix": "Cronograma —",
+      "created-on": "Creado el",
+      "not-found": "Operación no encontrada.",
+      "summary": {
+        "loan-amount": "Monto del préstamo",
+        "net-financed-balance": "Saldo a financiar",
+        "final-installment-amount": "Cuota final (Cuotón)",
+        "tea": "TEA",
+        "installment-amount": "Cuota constante",
+        "total-periods": "N° cuotas",
+        "van": "VAN",
+        "tir": "TIR"
+      },
+      "table": {
+        "group": {
+          "final-installment": "Cronograma de la Cuota Final (Cuotón)",
+          "regular-installment": "Cronograma de la Cuota Regular",
+          "operation-costs": "Costes de Operación"
+        },
+        "column": {
+          "number": "N°",
+          "type": "Tipo",
+          "initial-balance": "Saldo Inicial",
+          "interest": "Interés",
+          "amortization": "Amort.",
+          "desgravamen-insurance": "Seg. Desgrav.",
+          "final-balance": "Saldo Final",
+          "installment": "Cuota",
+          "risk-insurance": "Seg. Riesgo",
+          "gps": "GPS",
+          "postage": "Portes",
+          "administrative-fee": "Gastos Adm.",
+          "total-cuota": "Total Cuota"
+        }
+      }
+    }
+  },
+  "configuration": {
+    "title": "Configuración",
+    "currency": {
+      "title": "Moneda",
+      "pen": "S/ Soles",
+      "usd": "$ Dólares"
+    },
+    "exchange-rate": {
+      "title": "Tipo de cambio"
+    },
+    "language": {
+      "title": "Idioma"
+    }
+  },
+  "help": {
+    "title": "Ayuda y soporte",
+    "faq": {
+      "title": "Preguntas frecuentes",
+      "q1": {
+        "question": "¿Cómo calculo un crédito nuevo?",
+        "answer": "Ve a la sección Simulador, completa los datos del cliente, vehículo y condiciones del crédito, y presiona Calcular. Una vez conforme con el resultado, presiona Guardar para generar el cronograma."
+      },
+      "q2": {
+        "question": "¿Qué es la Cuota final (Cuotón)?",
+        "answer": "Es un pago adicional al final del crédito (estilo Compra Inteligente), que se calcula como un porcentaje del precio del vehículo y crece con intereses durante todo el plazo, pagándose junto con la última cuota."
+      },
+      "q3": {
+        "question": "¿Qué significa el periodo de gracia?",
+        "answer": "Es un lapso al inicio del crédito donde no se paga cuota regular. La gracia total no cobra nada (el interés se capitaliza); la gracia parcial cobra solo interés y seguro de desgravamen."
+      },
+      "q4": {
+        "question": "¿Cómo cambio la moneda o el tipo de cambio?",
+        "answer": "En Configuración puedes elegir Soles o Dólares como moneda activa, y editar el tipo de cambio (solo disponible cuando la moneda activa es Dólares)."
+      },
+      "q5": {
+        "question": "¿Puedo ver el cronograma después de guardarlo?",
+        "answer": "Sí, en la sección Cronogramas encontrarás todas las operaciones guardadas. Haz clic en \"Ver cronograma\" para ver el detalle completo de cada cuota."
+      }
+    },
+    "contact": {
+      "title": "¿Necesitas más ayuda?",
+      "description": "Si tu duda no está en las preguntas frecuentes, contáctanos por cualquiera de estos medios:",
+      "email-label": "Correo de soporte",
+      "phone-label": "Teléfono",
+      "hours-label": "Horario de atención",
+      "hours-value": "Lunes a viernes, 9:00 a.m. – 6:00 p.m.",
+      "form": {
+        "title": "Contáctanos",
+        "name-label": "Nombre",
+        "name-placeholder": "Tu nombre completo",
+        "email-label": "Correo",
+        "email-placeholder": "tu@correo.com",
+        "message-label": "Mensaje",
+        "message-placeholder": "Cuéntanos qué necesitas...",
+        "submit-button": "Enviar",
+        "required-error": "Este campo es obligatorio",
+        "email-invalid-error": "Ingresa un correo válido",
+        "success-message": "¡Gracias por escribirnos! Hemos recibido tu mensaje y te responderemos lo antes posible."
+      }
+    }
+  },
+  "not-found": {
+    "title": "Página no encontrada",
+    "description": "La página que buscas no existe o fue movida.",
+    "button": "Volver al Dashboard"
+  },
+  "unauthorized": {
+    "title": "Acceso restringido",
+    "description": "Tu cuenta no tiene permiso para ver esta sección. Si crees que esto es un error, contacta a soporte.",
+    "sign-out": "Cerrar sesión"
   }
 }

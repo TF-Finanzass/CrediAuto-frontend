@@ -1,43 +1,128 @@
-.simulador { color: #e2e8f0; }
+.simulador {
+  color: #e2e8f0;
+}
 
 .encabezado {
-  display: flex; align-items: center; justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-bottom: 16px;
 }
-.encabezado h2 { margin: 0; font-size: 22px; font-weight: 600; color: #f1f5f9; }
-.acciones-header { display: flex; gap: 8px; }
+
+.encabezado h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  color: #f1f5f9;
+}
+
+.acciones-header {
+  display: flex;
+  gap: 8px;
+}
 
 .tarjeta {
-  background: #1e293b; border-radius: 12px; padding: 16px; margin-bottom: 16px;
+  background: #1e293b;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
 }
-.tarjeta h3 { margin: 0 0 12px; font-size: 14px; color: #f1f5f9; }
 
-.fila { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-start; }
-.fila mat-form-field { flex: 1; min-width: 180px; }
+.tarjeta h3 {
+  margin: 0 0 12px;
+  font-size: 14px;
+  color: #f1f5f9;
+}
+
+.fila {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.fila mat-form-field {
+  flex: 1;
+  min-width: 180px;
+}
 
 .resumen-resultado {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
 }
+
 .resumen-resultado div {
-  background: #0f172a; border-radius: 8px; padding: 10px 14px;
-  display: flex; flex-direction: column; gap: 4px;
+  background: #0f172a;
+  border-radius: 8px;
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
-.resumen-resultado span { font-size: 11px; color: #94a3b8; }
-.resumen-resultado strong { font-size: 15px; color: #f1f5f9; }
 
-.ayuda-guardar { margin: 0; font-size: 12.5px; color: #94a3b8; }
-.ayuda-guardar strong { color: #cbd5e1; }
+.resumen-resultado span {
+  font-size: 11px;
+  color: #94a3b8;
+}
 
-.tabla-cronograma { width: 100%; border-collapse: collapse; font-size: 12px; }
+.resumen-resultado strong {
+  font-size: 15px;
+  color: #f1f5f9;
+}
+
+.ayuda-guardar {
+  margin: 0;
+  font-size: 12.5px;
+  color: #94a3b8;
+}
+
+.ayuda-guardar strong {
+  color: #cbd5e1;
+}
+
+.tabla-cronograma {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
 .tabla-cronograma th, .tabla-cronograma td {
-  padding: 8px; text-align: right; border-bottom: 1px solid #334155; color: #e2e8f0;
+  padding: 8px; text-align: right;
+  border-bottom: 1px solid #334155;
+  color: #e2e8f0;
 }
-.tabla-cronograma th { color: #94a3b8; font-weight: 600; text-transform: uppercase; font-size: 11px; letter-spacing: 0.03em; }
-.tabla-cronograma th:first-child, .tabla-cronograma td:first-child,
-.tabla-cronograma th:nth-child(2), .tabla-cronograma td:nth-child(2) { text-align: left; }
-.fila-gracia { color: #fbbf24; }
 
-/* --- Campos outline: texto y label --- */
+.tabla-cronograma th {
+  color: #94a3b8;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.03em;
+}
+
+.tabla-cronograma th:first-child, .tabla-cronograma td:first-child, .tabla-cronograma th:nth-child(2), .tabla-cronograma td:nth-child(2) {
+  text-align: left;
+}
+
+.fila-gracia {
+  color: #fbbf24;
+}
+
+.fila-checkbox {
+  align-items: center; gap: 20px;
+}
+
+.fila-checkbox mat-checkbox {
+  flex: 2; min-width: 260px;
+}
+
+.aviso-conversion {
+  margin-top: -10px;
+  margin-bottom: 12px;
+}
+
 ::ng-deep .simulador .mat-mdc-form-field-label,
 ::ng-deep .simulador .mdc-floating-label {
   color: #64748b !important;
@@ -64,7 +149,6 @@
   color: #64748b !important;
 }
 
-/* --- Borde del outline --- */
 ::ng-deep .simulador .mdc-notched-outline__leading,
 ::ng-deep .simulador .mdc-notched-outline__notch,
 ::ng-deep .simulador .mdc-notched-outline__trailing {
@@ -87,7 +171,6 @@
   color: #f87171 !important;
 }
 
-/* --- Toggle "Periodo de gracia" --- */
 ::ng-deep .simulador .mat-button-toggle-group {
   border-color: #334155 !important;
   border-radius: 8px;
@@ -108,5 +191,10 @@
   line-height: 40px !important;
 }
 
-.fila-checkbox { align-items: center; gap: 20px; }
-.fila-checkbox mat-checkbox { flex: 2; min-width: 260px; }
+::ng-deep .simulador .mat-mdc-checkbox .mdc-form-field {
+  color: #e2e8f0 !important;
+}
+
+::ng-deep .simulador .mat-mdc-checkbox label {
+  color: #e2e8f0 !important;
+}

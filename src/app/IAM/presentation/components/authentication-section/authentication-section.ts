@@ -1,16 +1,14 @@
-import {Component, inject} from '@angular/core';
-import {Router} from '@angular/router';
-import {IamStore} from '../../../application/iam.store';
-import {MatButton} from '@angular/material/button';
+import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { IamStore } from '../../../application/iam.store';
+import { MatButton } from '@angular/material/button';
+import { TranslatePipe } from '@ngx-translate/core';
 
-/**
- * Component for handling authentication actions in the presentation layer of the IAM bounded context.
- */
 @Component({
   selector: 'app-authentication-section',
-  imports: [MatButton],
+  imports: [MatButton, TranslatePipe],
   templateUrl: './authentication-section.html',
-  styleUrl: './authentication-section.css'
+  styleUrl: './authentication-section.css',
 })
 export class AuthenticationSection {
   private router = inject(Router);

@@ -3,12 +3,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DecimalPipe, DatePipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { TranslatePipe } from '@ngx-translate/core';
 import { SchedulesStore } from '../../../application/schedules.store';
 import { Currency, currencySymbol } from '../../../../Configuration/domain/model/currency';
 
 @Component({
   selector: 'app-operation-detail',
-  imports: [DecimalPipe, DatePipe, MatButtonModule, MatIconModule],
+  imports: [DecimalPipe, DatePipe, MatButtonModule, MatIconModule, TranslatePipe],
   templateUrl: './operation-detail.html',
   styleUrl: './operation-detail.css',
 })

@@ -1,6 +1,7 @@
 import { Component, computed, inject } from '@angular/core';
 import { DecimalPipe, DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
 import { CarsStore } from '../../../../Cars/application/cars.store';
 import { ClientsStore } from '../../../../Clients/application/clients.store';
 import { SchedulesStore } from '../../../../Schedules/application/schedules.store';
@@ -9,7 +10,7 @@ import { ClientStatus } from '../../../../Clients/domain/model/client.entity';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [DecimalPipe, RouterLink],
+  imports: [DecimalPipe, RouterLink, TranslatePipe],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })

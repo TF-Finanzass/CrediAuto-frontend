@@ -5,12 +5,7 @@ import { CreditOperationAssembler } from './credit-operation-assembler';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 
-export class SchedulesApiEndpoint extends BaseApiEndpoint<
-  CreditOperation,
-  CreditOperationResource,
-  CreditOperationsResponse,
-  CreditOperationAssembler
-> {
+export class SchedulesApiEndpoint extends BaseApiEndpoint< CreditOperation, CreditOperationResource, CreditOperationsResponse, CreditOperationAssembler > {
   constructor(http: HttpClient) {
     super(
       http,

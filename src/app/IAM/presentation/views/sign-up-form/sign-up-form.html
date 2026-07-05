@@ -1,34 +1,37 @@
-<div class="form">
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>Sign-Up</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <form [formGroup]="form" (submit)="performSignUp()">
-        <mat-form-field>
-          <input matInput placeholder="Username" id="username" name="username" required formControlName="username">
-          @if (isInvalidControl(form,'username')) {
-            <mat-error>{{ errorMessagesForControl(form,'username')}}</mat-error>
-          }
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput type="password" placeholder="Password" id="password" name="password" formControlName="password">
-          @if (isInvalidControl(form,'password')) {
-            <mat-error>{{ errorMessagesForControl(form,'password')}}</mat-error>
-          }
-        </mat-form-field>
-        <mat-form-field>
-          <mat-select placeholder="Role" formControlName="role">
-            @for (role of roles; track role) {
-              <mat-option [value]="role">{{ role }}</mat-option>
-            }
-          </mat-select>
-        </mat-form-field>
-        <button mat-raised-button color="primary">Sign-Up</button>
-      </form>
-      <p class="link-secundario">
-        ¿Ya tienes cuenta? <a routerLink="/sign-in">Inicia sesión</a>
-      </p>
-    </mat-card-content>
-  </mat-card>
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="auth-brand">
+      <mat-icon class="brand-icon">directions_car</mat-icon>
+      <div class="auth-brand-text">
+        <h1>CrediAuto</h1>
+        <span>Sistema financiero vehicular</span>
+      </div>
+    </div>
+
+    <h2 class="auth-title">Crear cuenta</h2>
+
+    <form [formGroup]="form" (submit)="performSignUp()" class="auth-form">
+      <div class="campo">
+        <label for="username">Usuario</label>
+        <input id="username" name="username" required formControlName="username" class="auth-input">
+        @if (isInvalidControl(form,'username')) {
+          <span class="auth-error">{{ errorMessagesForControl(form,'username') }}</span>
+        }
+      </div>
+
+      <div class="campo">
+        <label for="password">Contraseña</label>
+        <input type="password" id="password" name="password" formControlName="password" class="auth-input">
+        @if (isInvalidControl(form,'password')) {
+          <span class="auth-error">{{ errorMessagesForControl(form,'password') }}</span>
+        }
+      </div>
+
+      <button type="submit" class="auth-submit">Crear cuenta</button>
+    </form>
+
+    <p class="auth-secondary">
+      ¿Ya tienes cuenta? <a routerLink="/sign-in">Inicia sesión</a>
+    </p>
+  </div>
 </div>

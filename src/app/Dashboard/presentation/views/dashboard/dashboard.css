@@ -1,45 +1,116 @@
-.dashboard { color: #e2e8f0; }
+.dashboard {
+  color: #e2e8f0;
+}
 
-.encabezado { margin-bottom: 16px; }
-.encabezado h2 { margin: 0; font-size: 18px; }
+.encabezado {
+  margin-bottom: 16px;
+}
+
+.encabezado h2 {
+  margin: 0;
+  font-size: 18px;
+}
 
 .tarjetas-resumen {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
 }
+
 .tarjeta-metrica {
-  background: #1e293b; border-radius: 12px; padding: 16px;
-  display: flex; flex-direction: column; gap: 6px;
+  background: #1e293b;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
-.tarjeta-metrica .etiqueta { font-size: 12px; color: #94a3b8; }
-.tarjeta-metrica strong { font-size: 22px; }
+
+.tarjeta-metrica .etiqueta {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.tarjeta-metrica strong {
+  font-size: 22px;
+}
 
 .fila-doble {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
 }
 
 .tarjeta {
-  background: #1e293b; border-radius: 12px; padding: 16px;
+  background: #1e293b;
+  border-radius: 12px;
+  padding: 16px;
 }
-.tarjeta h3 { margin: 0 0 12px; font-size: 14px; }
 
-.estados-lista { display: flex; flex-direction: column; gap: 10px; }
+.tarjeta h3 {
+  margin: 0 0 12px;
+  font-size: 14px;
+}
+
+.estados-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .estado-item {
-  display: flex; align-items: center; justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   font-size: 13px;
 }
+
 .punto {
-  width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 8px;
+  display: inline-block;
 }
-.punto.disponible { background: #4ade80; }
-.punto.reservado { background: #fbbf24; }
-.punto.agotado { background: #f87171; }
 
-.total-clientes { margin-top: 12px; font-size: 12px; color: #94a3b8; }
+.punto.disponible {
+  background: #4ade80;
+}
 
-.tabla-operaciones { width: 100%; border-collapse: collapse; font-size: 13px; }
+.punto.reservado {
+  background: #fbbf24;
+}
+
+.punto.agotado {
+  background: #f87171;
+}
+
+.total-clientes {
+  margin-top: 12px;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.tabla-operaciones {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
 .tabla-operaciones th, .tabla-operaciones td {
-  padding: 8px; text-align: left; border-bottom: 1px solid #334155;
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #334155;
 }
-.tabla-operaciones a { color: #60a5fa; text-decoration: none; }
 
-.vacio { color: #94a3b8; font-size: 13px; }
+.tabla-operaciones a {
+  color: #60a5fa;
+  text-decoration: none;
+}
+
+.vacio {
+  color: #94a3b8;
+  font-size: 13px;
+}

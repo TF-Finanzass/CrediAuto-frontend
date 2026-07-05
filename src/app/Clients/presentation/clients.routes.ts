@@ -1,4 +1,4 @@
-import {Routes} from '@angular/router';
+import { Routes } from '@angular/router';
 
 const clientList = () => import('./views/client-list/client-list').then(m => m.ClientList);
 const clientForm = () => import('./views/client-form/client-form').then(m => m.ClientForm);

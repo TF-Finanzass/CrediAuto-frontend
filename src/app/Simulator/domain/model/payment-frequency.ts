@@ -8,7 +8,6 @@ export enum PaymentFrequency {
   Anual = 'Anual',
 }
 
-/** Número de pagos/capitalizaciones por año según la frecuencia. */
 export function periodsPerYear(frequency: PaymentFrequency): number {
   const map: Record<PaymentFrequency, number> = {
     [PaymentFrequency.Diaria]: 360,

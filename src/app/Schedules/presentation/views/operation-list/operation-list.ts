@@ -4,18 +4,8 @@ import { DecimalPipe, DatePipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import {
-  MatCell,
-  MatCellDef,
-  MatColumnDef,
-  MatHeaderCell,
-  MatHeaderCellDef,
-  MatHeaderRow,
-  MatHeaderRowDef,
-  MatRow,
-  MatRowDef,
-  MatTable,
-} from '@angular/material/table';
+import { TranslatePipe } from '@ngx-translate/core';
+import { MatCell, MatCellDef, MatColumnDef, MatHeaderCell, MatHeaderCellDef, MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef, MatTable } from '@angular/material/table';
 import { SchedulesStore } from '../../../application/schedules.store';
 import { ClientsStore } from '../../../../Clients/application/clients.store';
 import { Currency, currencySymbol } from '../../../../Configuration/domain/model/currency';
@@ -38,10 +28,12 @@ import { Currency, currencySymbol } from '../../../../Configuration/domain/model
     MatRowDef,
     MatHeaderRow,
     MatRow,
+    TranslatePipe,
   ],
   templateUrl: './operation-list.html',
   styleUrl: './operation-list.css',
 })
+
 export class OperationList {
   readonly store = inject(SchedulesStore);
   readonly clientsStore = inject(ClientsStore);

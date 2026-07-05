@@ -3,19 +3,7 @@ import { DecimalPipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { CarsStore } from '../../../application/cars.store';
 import { Currency, currencySymbol } from '../../../../Configuration/domain/model/currency';
-import {
-  MatCell,
-  MatCellDef,
-  MatColumnDef,
-  MatHeaderCell,
-  MatHeaderCellDef,
-  MatHeaderRow,
-  MatHeaderRowDef,
-  MatRow,
-  MatRowDef,
-  MatTable,
-  MatTableDataSource,
-} from '@angular/material/table';
+import { MatCell, MatCellDef, MatColumnDef, MatHeaderCell, MatHeaderCellDef, MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef, MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatButton } from '@angular/material/button';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -48,6 +36,7 @@ import { MatIconModule } from '@angular/material/icon';
   templateUrl: './car-list.html',
   styleUrl: './car-list.css',
 })
+
 export class CarList implements AfterViewChecked {
   readonly store = inject(CarsStore);
   protected router = inject(Router);

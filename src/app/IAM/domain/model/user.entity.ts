@@ -1,10 +1,6 @@
-import {BaseEntity} from '../../../shared/infrastructure/base-entity';
-import {Role} from './role';
+import { BaseEntity } from '../../../shared/infrastructure/base-entity';
+import { Role } from './role';
 
-/**
- * Represents a user entity in the domain layer of the IAM bounded context.
- * Implements the BaseEntity interface.
- */
 export class User implements BaseEntity {
   set fullName(value: string) { this._fullName = value; }
   set email(value: string) { this._email = value; }
@@ -21,10 +17,6 @@ export class User implements BaseEntity {
   private _email: string;
   private _role: Role;
 
-  /**
-   * Creates a new User instance.
-   * @param user An object containing the user's id, fullName, email, and role.
-   */
   constructor(user: {id: number, fullName: string, email: string, role: Role}) {
     this._id = user.id;
     this._fullName = user.fullName;

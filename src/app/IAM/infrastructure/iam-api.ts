@@ -1,19 +1,16 @@
-import {Injectable} from '@angular/core';
-import {BaseApi} from '../../shared/infrastructure/base-api';
-import {SignUpApiEndpoint} from './sign-up-api-endpoint';
-import {SignInApiEndpoint} from './sign-in-api-endpoint';
-import {HttpClient} from '@angular/common/http';
-import {SignUpAssembler} from './sign-up-assembler';
-import {SignInAssembler} from './sign-in-assembler';
-import {SignUpCommand} from '../domain/model/sign-up.command';
-import {Observable} from 'rxjs';
-import {SignUpResource} from './sign-up-response';
-import {SignInCommand} from '../domain/model/sign-in.command';
-import {SignInResource} from './sign-in-response';
+import { Injectable } from '@angular/core';
+import { BaseApi } from '../../shared/infrastructure/base-api';
+import { SignUpApiEndpoint } from './sign-up-api-endpoint';
+import { SignInApiEndpoint } from './sign-in-api-endpoint';
+import { HttpClient } from '@angular/common/http';
+import { SignUpAssembler } from './sign-up-assembler';
+import { SignInAssembler } from './sign-in-assembler';
+import { SignUpCommand } from '../domain/model/sign-up.command';
+import { Observable } from 'rxjs';
+import { SignUpResource } from './sign-up-response';
+import { SignInCommand } from '../domain/model/sign-in.command';
+import { SignInResource } from './sign-in-response';
 
-/**
- * API service for Identity and Access Management operations in the infrastructure layer of the IAM bounded context.
- */
 @Injectable({providedIn: 'root'})
 export class IamApi extends BaseApi {
   private readonly signUpEndpoint: SignUpApiEndpoint;

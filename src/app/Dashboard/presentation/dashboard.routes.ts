@@ -1,4 +1,4 @@
-import {Routes} from '@angular/router';
+import { Routes } from '@angular/router';
 
 const dashboard = () => import('./views/dashboard/dashboard').then(m => m.Dashboard);
 

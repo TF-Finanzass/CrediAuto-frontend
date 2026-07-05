@@ -1,6 +1,6 @@
-import {SignInResource, SignInResponse} from './sign-in-response';
-import {SignInCommand} from '../domain/model/sign-in.command';
-import {SignInRequest} from './sign-in.request';
+import { SignInResource, SignInResponse } from './sign-in-response';
+import { SignInCommand } from '../domain/model/sign-in.command';
+import { SignInRequest } from './sign-in.request';
 
 export class SignInAssembler {
   toResourceFromResponse(response: SignInResponse): SignInResource {

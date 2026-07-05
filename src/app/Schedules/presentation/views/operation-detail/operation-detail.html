@@ -2,39 +2,39 @@
   <div class="detalle">
     <button mat-stroked-button class="back-btn" (click)="volver()">
       <mat-icon>arrow_back</mat-icon>
-      Volver
+      {{ 'schedules.detail.back' | translate }}
     </button>
 
-    <h2 class="titulo">Cronograma — {{ op.clientName }}</h2>
-    <p class="subtitulo">{{ op.carLabel }} · Creado el {{ op.createdAt | date:'dd/MM/yyyy' }}</p>
+    <h2 class="titulo">{{ 'schedules.detail.title-prefix' | translate }} {{ op.clientName }}</h2>
+    <p class="subtitulo">{{ op.carLabel }} · {{ 'schedules.detail.created-on' | translate }} {{ op.createdAt | date:'dd/MM/yyyy' }}</p>
 
     <div class="resumen">
-      <div><span>Monto del préstamo</span><strong>{{ symbolFor(op.currency) }} {{ op.loanAmount | number:'1.2-2' }}</strong></div>
-      <div><span>Saldo a financiar</span><strong>{{ symbolFor(op.currency) }} {{ op.netFinancedBalance | number:'1.2-2' }}</strong></div>
-      <div><span>Cuota final (Cuotón)</span><strong>{{ symbolFor(op.currency) }} {{ op.finalInstallmentAmount | number:'1.2-2' }}</strong></div>
-      <div><span>TEA</span><strong>{{ op.tea * 100 | number:'1.2-2' }}%</strong></div>
-      <div><span>Cuota constante</span><strong>{{ symbolFor(op.currency) }} {{ op.installmentAmount | number:'1.2-2' }}</strong></div>
-      <div><span>N° cuotas</span><strong>{{ op.totalPeriods }}</strong></div>
-      <div><span>VAN</span><strong>{{ symbolFor(op.currency) }} {{ op.van | number:'1.2-2' }}</strong></div>
-      <div><span>TIR</span><strong>{{ op.tir * 100 | number:'1.2-2' }}%</strong></div>
+      <div><span>{{ 'schedules.detail.summary.loan-amount' | translate }}</span><strong>{{ symbolFor(op.currency) }} {{ op.loanAmount | number:'1.2-2' }}</strong></div>
+      <div><span>{{ 'schedules.detail.summary.net-financed-balance' | translate }}</span><strong>{{ symbolFor(op.currency) }} {{ op.netFinancedBalance | number:'1.2-2' }}</strong></div>
+      <div><span>{{ 'schedules.detail.summary.final-installment-amount' | translate }}</span><strong>{{ symbolFor(op.currency) }} {{ op.finalInstallmentAmount | number:'1.2-2' }}</strong></div>
+      <div><span>{{ 'schedules.detail.summary.tea' | translate }}</span><strong>{{ op.tea * 100 | number:'1.2-2' }}%</strong></div>
+      <div><span>{{ 'schedules.detail.summary.installment-amount' | translate }}</span><strong>{{ symbolFor(op.currency) }} {{ op.installmentAmount | number:'1.2-2' }}</strong></div>
+      <div><span>{{ 'schedules.detail.summary.total-periods' | translate }}</span><strong>{{ op.totalPeriods }}</strong></div>
+      <div><span>{{ 'schedules.detail.summary.van' | translate }}</span><strong>{{ symbolFor(op.currency) }} {{ op.van | number:'1.2-2' }}</strong></div>
+      <div><span>{{ 'schedules.detail.summary.tir' | translate }}</span><strong>{{ op.tir * 100 | number:'1.2-2' }}%</strong></div>
     </div>
 
     <div class="tabla-card">
       <table class="tabla-cronograma">
         <thead>
         <tr>
-          <th rowspan="2">N°</th>
-          <th rowspan="2">Tipo</th>
-          <th colspan="5" class="grupo-header">Cronograma de la Cuota Final (Cuotón)</th>
-          <th colspan="5" class="grupo-header">Cronograma de la Cuota Regular</th>
-          <th colspan="4" class="grupo-header">Costes de Operación</th>
-          <th rowspan="2">Saldo Final</th>
-          <th rowspan="2">Total Cuota</th>
+          <th rowspan="2">{{ 'schedules.detail.table.column.number' | translate }}</th>
+          <th rowspan="2">{{ 'schedules.detail.table.column.type' | translate }}</th>
+          <th colspan="5" class="grupo-header">{{ 'schedules.detail.table.group.final-installment' | translate }}</th>
+          <th colspan="5" class="grupo-header">{{ 'schedules.detail.table.group.regular-installment' | translate }}</th>
+          <th colspan="4" class="grupo-header">{{ 'schedules.detail.table.group.operation-costs' | translate }}</th>
+          <th rowspan="2">{{ 'schedules.detail.table.column.final-balance' | translate }}</th>
+          <th rowspan="2">{{ 'schedules.detail.table.column.total-cuota' | translate }}</th>
         </tr>
         <tr>
-          <th class="grupo-inicio">Saldo Inicial</th><th>Interés</th><th>Amort.</th><th>Seg. Desgrav.</th><th>Saldo Final</th>
-          <th class="grupo-inicio">Saldo Inicial</th><th>Interés</th><th>Cuota</th><th>Amort.</th><th>Seg. Desgrav.</th>
-          <th class="grupo-inicio">Seg. Riesgo</th><th>GPS</th><th>Portes</th><th>Gastos Adm.</th>
+          <th class="grupo-inicio">{{ 'schedules.detail.table.column.initial-balance' | translate }}</th><th>{{ 'schedules.detail.table.column.interest' | translate }}</th><th>{{ 'schedules.detail.table.column.amortization' | translate }}</th><th>{{ 'schedules.detail.table.column.desgravamen-insurance' | translate }}</th><th>{{ 'schedules.detail.table.column.final-balance' | translate }}</th>
+          <th class="grupo-inicio">{{ 'schedules.detail.table.column.initial-balance' | translate }}</th><th>{{ 'schedules.detail.table.column.interest' | translate }}</th><th>{{ 'schedules.detail.table.column.installment' | translate }}</th><th>{{ 'schedules.detail.table.column.amortization' | translate }}</th><th>{{ 'schedules.detail.table.column.desgravamen-insurance' | translate }}</th>
+          <th class="grupo-inicio">{{ 'schedules.detail.table.column.risk-insurance' | translate }}</th><th>{{ 'schedules.detail.table.column.gps' | translate }}</th><th>{{ 'schedules.detail.table.column.postage' | translate }}</th><th>{{ 'schedules.detail.table.column.administrative-fee' | translate }}</th>
         </tr>
         </thead>
         <tbody>
@@ -69,5 +69,5 @@
     </div>
   </div>
 } @else {
-  <p class="no-encontrado">Operación no encontrada.</p>
+  <p class="no-encontrado">{{ 'schedules.detail.not-found' | translate }}</p>
 }

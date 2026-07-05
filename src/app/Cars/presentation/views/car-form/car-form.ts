@@ -25,6 +25,7 @@ import { TranslatePipe } from '@ngx-translate/core';
   templateUrl: './car-form.html',
   styleUrl: './car-form.css',
 })
+
 export class CarForm {
   private fb = inject(FormBuilder);
   private router = inject(Router);

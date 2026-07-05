@@ -55,6 +55,35 @@
   overflow: hidden;
 }
 
+.price-cell {
+  font-variant-numeric: tabular-nums;
+  color: #f1f5f9;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-pendiente {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+}
+
+.status-aprobado {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+}
+
+.status-rechazado {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+}
+
 ::ng-deep .table-card .mat-mdc-table {
   background: transparent;
 }
@@ -88,35 +117,6 @@
 
 ::ng-deep .table-card .mat-sort-header-arrow {
   color: #3b82f6;
-}
-
-.price-cell {
-  font-variant-numeric: tabular-nums;
-  color: #f1f5f9;
-}
-
-.status-pill {
-  display: inline-flex;
-  align-items: center;
-  padding: 3px 10px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.status-pendiente {
-  background: rgba(245, 158, 11, 0.15);
-  color: #fbbf24;
-}
-
-.status-aprobado {
-  background: rgba(16, 185, 129, 0.15);
-  color: #34d399;
-}
-
-.status-rechazado {
-  background: rgba(239, 68, 68, 0.15);
-  color: #f87171;
 }
 
 ::ng-deep .table-card .mat-mdc-paginator {

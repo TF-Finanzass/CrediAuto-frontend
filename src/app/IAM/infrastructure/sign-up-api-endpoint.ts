@@ -1,16 +1,13 @@
-import {environment} from '../../../environments/environment';
-import {ErrorHandlingEnabledBaseType} from '../../shared/infrastructure/error-handling-enabled-base-type';
-import {HttpClient} from '@angular/common/http';
-import {catchError, map, Observable} from 'rxjs';
-import {SignUpAssembler} from './sign-up-assembler';
-import {SignUpResource, SignUpResponse} from './sign-up-response';
-import {SignUpCommand} from '../domain/model/sign-up.command';
+import { environment } from '../../../environments/environment';
+import { ErrorHandlingEnabledBaseType } from '../../shared/infrastructure/error-handling-enabled-base-type';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map, Observable } from 'rxjs';
+import { SignUpAssembler } from './sign-up-assembler';
+import { SignUpResource, SignUpResponse } from './sign-up-response';
+import { SignUpCommand } from '../domain/model/sign-up.command';
 
 const signUpApiEndpointUrl = `${environment.platformProviderApiBaseUrl}${environment.platformProviderSignUpEndpointPath}`;
 
-/**
- * API endpoint for handling user sign-up operations in the infrastructure layer of the IAM bounded context.
- */
 export class SignUpApiEndpoint extends ErrorHandlingEnabledBaseType {
   constructor(private http: HttpClient, private assembler: SignUpAssembler) {
     super();

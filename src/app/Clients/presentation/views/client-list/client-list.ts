@@ -2,11 +2,7 @@ import {AfterViewChecked, Component, computed, inject, ViewChild} from '@angular
 import {Router} from '@angular/router';
 import {DecimalPipe} from '@angular/common';
 import {ClientsStore} from '../../../application/clients.store';
-import {MatError} from '@angular/material/form-field';
-import {
-  MatCell, MatCellDef, MatColumnDef, MatHeaderCell, MatHeaderCellDef,
-  MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef, MatTable, MatTableDataSource
-} from '@angular/material/table';
+import { MatCell, MatCellDef, MatColumnDef, MatHeaderCell, MatHeaderCellDef, MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef, MatTable, MatTableDataSource } from '@angular/material/table';
 import {MatButton} from '@angular/material/button';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {TranslatePipe} from '@ngx-translate/core';
@@ -25,6 +21,7 @@ import {MatIconModule} from '@angular/material/icon';
   templateUrl: './client-list.html',
   styleUrl: './client-list.css'
 })
+
 export class ClientList implements AfterViewChecked {
   readonly store = inject(ClientsStore);
   protected router = inject(Router);

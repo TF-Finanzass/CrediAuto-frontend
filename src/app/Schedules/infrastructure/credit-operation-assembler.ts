@@ -1,18 +1,10 @@
 import { BaseAssembler } from '../../shared/infrastructure/base-assembler';
 import { CreditOperation } from '../domain/model/credit-operation';
-import {
-  CreditOperationResource,
-  CreditOperationsResponse,
-  InstallmentResource,
-} from './credit-operation-response';
+import { CreditOperationResource, CreditOperationsResponse, InstallmentResource } from './credit-operation-response';
 import { Installment } from '../../Simulator/domain/model/installment';
 import { Currency } from '../../Configuration/domain/model/currency';
 
-export class CreditOperationAssembler implements BaseAssembler <
-CreditOperation,
-  CreditOperationResource,
-CreditOperationsResponse
-> {
+export class CreditOperationAssembler implements BaseAssembler < CreditOperation, CreditOperationResource, CreditOperationsResponse > {
   toEntitiesFromResponse(response: CreditOperationsResponse): CreditOperation[] {
     return response.map((resource) => this.toEntityFromResource(resource));
   }

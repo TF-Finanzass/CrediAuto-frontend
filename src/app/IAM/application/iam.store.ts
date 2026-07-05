@@ -1,63 +1,95 @@
-import {computed, Injectable, signal} from '@angular/core';
-import {User} from '../domain/model/user.entity';
-import {SignInCommand} from '../domain/model/sign-in.command';
-import {Router} from '@angular/router';
-import {IamApi} from '../infrastructure/iam-api';
-import {SignUpCommand} from '../domain/model/sign-up.command';
-import {Role} from '../domain/model/role';
+import { computed, Injectable, signal } from '@angular/core';
+import { SignInCommand } from '../domain/model/sign-in.command';
+import { Router } from '@angular/router';
+import { IamApi } from '../infrastructure/iam-api';
+import { SignUpCommand } from '../domain/model/sign-up.command';
+import { Role } from '../domain/model/role';
 
-/**
- * Application service store for managing Identity and Access Management state in the IAM bounded context.
- * Handles user authentication, sign-in, sign-up, and user data.
- */
-@Injectable({providedIn: 'root'})
+interface StoredSession {
+  token: string;
+  username: string;
+  id: number;
+  role: Role;
+}
+
+const SESSION_KEY = 'session';
+
+@Injectable({ providedIn: 'root' })
 export class IamStore {
   private readonly isSignedInSignal = signal<boolean>(false);
   private readonly currentFullNameSignal = signal<string | null>(null);
   private readonly currentUserIdSignal = signal<number | null>(null);
   private readonly currentRoleSignal = signal<Role | null>(null);
-
   readonly isSignedIn = this.isSignedInSignal.asReadonly();
   readonly currentFullName = this.currentFullNameSignal.asReadonly();
   readonly currentUserId = this.currentUserIdSignal.asReadonly();
   readonly currentRole = this.currentRoleSignal.asReadonly();
-
   readonly isSeller = computed(() => this.currentRoleSignal() === Role.Seller);
   readonly isBuyer = computed(() => this.currentRoleSignal() === Role.Buyer);
 
-  readonly currentToken = computed(() => this.isSignedIn() ? localStorage.getItem('token') : null);
+  readonly currentToken = computed(() =>
+    this.isSignedIn() ? (this.readSession()?.token ?? null) : null,
+  );
 
-  /**
-   * Creates an instance of IamStore.
-   * @param iamApi The IAM API service.
-   */
   constructor(private iamApi: IamApi) {
-    this.isSignedInSignal.set(false);
-    this.currentFullNameSignal.set(null);
-    this.currentUserIdSignal.set(null);
-    this.currentRoleSignal.set(null);
+    this.rehydrateFromStorage();
   }
 
-  /**
-   * Signs in a user with the provided credentials.
-   */
+  private rehydrateFromStorage(): void {
+    const session = this.readSession();
+    if (session) {
+      this.isSignedInSignal.set(true);
+      this.currentFullNameSignal.set(session.username);
+      this.currentUserIdSignal.set(session.id);
+      this.currentRoleSignal.set(session.role);
+    } else {
+      this.isSignedInSignal.set(false);
+      this.currentFullNameSignal.set(null);
+      this.currentUserIdSignal.set(null);
+      this.currentRoleSignal.set(null);
+    }
+  }
+
+  private readSession(): StoredSession | null {
+    const raw = localStorage.getItem(SESSION_KEY);
+    if (!raw) return null;
+    try {
+      return JSON.parse(raw) as StoredSession;
+    } catch {
+      return null;
+    }
+  }
+
+  private writeSession(session: StoredSession): void {
+    localStorage.setItem(SESSION_KEY, JSON.stringify(session));
+    localStorage.setItem('token', session.token); // se mantiene por compatibilidad con el interceptor existente
+  }
+
+  private clearSession(): void {
+    localStorage.removeItem(SESSION_KEY);
+    localStorage.removeItem('token');
+  }
+
   signIn(signInCommand: SignInCommand, router: Router) {
     this.iamApi.signIn(signInCommand).subscribe({
       next: (signInResource) => {
-        localStorage.setItem('token', signInResource.token);
+        const session: StoredSession = {
+          token: signInResource.token,
+          username: signInResource.username,
+          id: signInResource.id,
+          role: signInResource.role as Role,
+        };
+        this.writeSession(session);
         this.isSignedInSignal.set(true);
-        this.currentFullNameSignal.set(signInResource.username); // ahora usa username
-        this.currentUserIdSignal.set(signInResource.id);
-        this.currentRoleSignal.set(signInResource.role as Role);
+        this.currentFullNameSignal.set(session.username);
+        this.currentUserIdSignal.set(session.id);
+        this.currentRoleSignal.set(session.role);
         router.navigate(['/dashboard']).then();
       },
       // ...
     });
   }
 
-  /**
-   * Signs up a new user.
-   */
   signUp(signUpCommand: SignUpCommand, router: Router) {
     this.iamApi.signUp(signUpCommand).subscribe({
       next: (signUpResource) => {
@@ -67,15 +99,12 @@ export class IamStore {
       error: (err) => {
         console.error('Sign-up failed:', err);
         router.navigate(['/sign-up']).then();
-      }
+      },
     });
   }
 
-  /**
-   * Signs out the current user.
-   */
   signOut(router: Router) {
-    localStorage.removeItem('token');
+    this.clearSession();
     this.isSignedInSignal.set(false);
     this.currentFullNameSignal.set(null);
     this.currentUserIdSignal.set(null);

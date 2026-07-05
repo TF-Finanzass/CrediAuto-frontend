@@ -62,6 +62,8 @@
 .nav-footer {
   border-top: 1px solid #1e293b;
   padding-top: 12px;
+  display: flex;
+  justify-content: center;
 }
 
 .nav-footer .user-info {

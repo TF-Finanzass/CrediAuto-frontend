@@ -56,7 +56,6 @@
   border-color: #475569 !important;
 }
 
-/* --- Campo outline: texto y label --- */
 ::ng-deep .form-card .mat-mdc-form-field-label,
 ::ng-deep .form-card .mdc-floating-label {
   color: #64748b !important;

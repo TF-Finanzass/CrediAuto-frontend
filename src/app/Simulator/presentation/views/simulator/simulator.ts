@@ -7,6 +7,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { DecimalPipe } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
 import { ClientsStore } from '../../../../Clients/application/clients.store';
 import { CarsStore } from '../../../../Cars/application/cars.store';
 import { FrenchAmortizationService } from '../../../application/services/french-amortization.service';
@@ -28,10 +29,12 @@ import { Currency, currencySymbol } from '../../../../Configuration/domain/model
     MatButtonModule,
     MatCheckboxModule,
     DecimalPipe,
+    TranslatePipe,
   ],
   templateUrl: './simulator.html',
   styleUrl: './simulator.css',
 })
+
 export class Simulator {
   private fb = inject(FormBuilder);
   private amortizationService = inject(FrenchAmortizationService);
@@ -41,7 +44,6 @@ export class Simulator {
   clientsStore = inject(ClientsStore);
   carsStore = inject(CarsStore);
   configStore = inject(ConfigurationStore);
-
   rateTypes = Object.values(RateType);
   frequencies = Object.values(PaymentFrequency).filter((f) => f !== PaymentFrequency.Diaria);
   capitalizationFrequencies = Object.values(PaymentFrequency);
@@ -57,13 +59,13 @@ export class Simulator {
   form = this.fb.group({
     clientId: [null as number | null, Validators.required],
     carId: [null as number | null, Validators.required],
-    vehiclePrice: [0, [Validators.required, Validators.min(0)]],
-    downPaymentPercent: [20, [Validators.required, Validators.min(0), Validators.max(100)]],
+    vehiclePrice: [{ value: 0, disabled: true }, [Validators.required, Validators.min(0)]],
+    downPaymentPercent: [0, [Validators.required, Validators.min(0), Validators.max(100)]],
     rateType: [RateType.Efectiva, Validators.required],
-    annualRate: [18, [Validators.required, Validators.min(0)]],
-    capitalization: [PaymentFrequency.Mensual],
+    annualRate: [0, [Validators.required, Validators.min(0)]],
+    capitalization: [PaymentFrequency.Diaria],
     paymentFrequency: [PaymentFrequency.Mensual, Validators.required],
-    termMonths: [36, [Validators.required, Validators.min(1)]],
+    termMonths: [0, [Validators.required, Validators.min(1)]],
 
     useAutoFinalInstallment: [true],
     finalInstallmentPercent: [
@@ -88,10 +90,10 @@ export class Simulator {
       administrativeFee: [0, [Validators.min(0)]],
     }),
 
-    desgravamenInsurancePercent: [0.049, [Validators.min(0)]],
-    riskInsurancePercent: [0.3, [Validators.min(0)]],
+    desgravamenInsurancePercent: [0, [Validators.min(0)]],
+    riskInsurancePercent: [0, [Validators.min(0)]],
 
-    discountRate: [10, [Validators.required, Validators.min(0)]],
+    discountRate: [0, [Validators.required, Validators.min(0)]],
   });
 
   constructor() {
@@ -112,7 +114,6 @@ export class Simulator {
       }
     });
 
-    // Mantiene el % de cuota final sugerido sincronizado con el plazo mientras esté en modo automático.
     this.form.controls.termMonths.valueChanges.subscribe((term) => {
       if (this.form.value.useAutoFinalInstallment && term) {
         this.form.controls.finalInstallmentPercent.setValue(defaultFinalInstallmentPercent(term), {
@@ -242,21 +243,24 @@ export class Simulator {
 
   limpiar(): void {
     this.form.reset({
-      downPaymentPercent: 20,
+      clientId: null,
+      carId: null,
+      vehiclePrice: 0,
+      downPaymentPercent: 0,
       rateType: RateType.Efectiva,
-      annualRate: 18,
-      capitalization: PaymentFrequency.Mensual,
+      annualRate: 0,
+      capitalization: PaymentFrequency.Diaria,
       paymentFrequency: PaymentFrequency.Mensual,
-      termMonths: 36,
+      termMonths: 0,
       useAutoFinalInstallment: true,
       finalInstallmentPercent: 40,
       graceTotalMonths: 0,
       gracePartialMonths: 0,
       initialCosts: { notarial: 0, registration: 0, appraisal: 0, studyFee: 0, activationFee: 0 },
       periodicCharges: { gps: 0, postage: 0, administrativeFee: 0 },
-      desgravamenInsurancePercent: 0.049,
-      riskInsurancePercent: 0.3,
-      discountRate: 10,
+      desgravamenInsurancePercent: 0,
+      riskInsurancePercent: 0,
+      discountRate: 0,
     });
     this.result.set(null);
     this.selectedCarCurrency.set(null);
@@ -264,4 +268,25 @@ export class Simulator {
   }
 
   protected readonly RateType = RateType;
+
+  protected rateTypeKey(rt: RateType): string {
+    const map: Record<RateType, string> = {
+      [RateType.Efectiva]: 'effective',
+      [RateType.Nominal]: 'nominal',
+    };
+    return map[rt];
+  }
+
+  protected frequencyKey(freq: PaymentFrequency): string {
+    const map: Record<PaymentFrequency, string> = {
+      [PaymentFrequency.Diaria]: 'daily',
+      [PaymentFrequency.Mensual]: 'monthly',
+      [PaymentFrequency.Bimestral]: 'bimonthly',
+      [PaymentFrequency.Trimestral]: 'quarterly',
+      [PaymentFrequency.Cuatrimestral]: 'four-monthly',
+      [PaymentFrequency.Semestral]: 'semiannual',
+      [PaymentFrequency.Anual]: 'annual',
+    };
+    return map[freq];
+  }
 }

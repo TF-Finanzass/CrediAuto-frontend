@@ -1,0 +1,113 @@
+<div class="ayuda">
+  <h2 class="titulo">{{ 'help.title' | translate }}</h2>
+
+  <section class="tarjeta">
+    <h3>{{ 'help.faq.title' | translate }}</h3>
+
+    <div class="faq-lista">
+      @for (item of faqItems; track item.key) {
+        <div class="faq-item" [class.abierto]="isOpen(item.key)">
+          <button class="faq-pregunta" (click)="toggle(item.key)">
+            <span>{{ 'help.faq.' + item.key + '.question' | translate }}</span>
+            <mat-icon>{{ isOpen(item.key) ? 'expand_less' : 'expand_more' }}</mat-icon>
+          </button>
+          @if (isOpen(item.key)) {
+            <p class="faq-respuesta">{{ 'help.faq.' + item.key + '.answer' | translate }}</p>
+          }
+        </div>
+      }
+    </div>
+  </section>
+
+  <section class="tarjeta">
+    <h3>{{ 'help.contact.title' | translate }}</h3>
+    <p class="descripcion">{{ 'help.contact.description' | translate }}</p>
+
+    <div class="contacto-lista">
+      <div class="contacto-item">
+        <mat-icon>mail</mat-icon>
+        <div>
+          <span class="contacto-label">{{ 'help.contact.email-label' | translate }}</span>
+          <a href="mailto:crediauto&#64;gmail.com">crediauto&#64;gmail.com</a>
+        </div>
+      </div>
+
+      <div class="contacto-item">
+        <mat-icon>call</mat-icon>
+        <div>
+          <span class="contacto-label">{{ 'help.contact.phone-label' | translate }}</span>
+          <a href="tel:+51987654321">+51 987 654 321</a>
+        </div>
+      </div>
+
+      <div class="contacto-item">
+        <mat-icon>schedule</mat-icon>
+        <div>
+          <span class="contacto-label">{{ 'help.contact.hours-label' | translate }}</span>
+          <span>{{ 'help.contact.hours-value' | translate }}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tarjeta">
+    <h3>{{ 'help.contact.form.title' | translate }}</h3>
+
+    @if (submitted()) {
+      <div class="form-exito">
+        <mat-icon>check_circle</mat-icon>
+        <span>{{ 'help.contact.form.success-message' | translate }}</span>
+      </div>
+    } @else {
+      <form [formGroup]="contactForm" (submit)="submitContactForm()" class="contacto-form">
+        <div class="form-campo">
+          <label for="help-name">{{ 'help.contact.form.name-label' | translate }}</label>
+          <input
+            id="help-name"
+            type="text"
+            formControlName="name"
+            class="form-input"
+            [placeholder]="'help.contact.form.name-placeholder' | translate"
+          >
+          @if (isInvalidControl('name')) {
+            <span class="form-error">{{ 'help.contact.form.required-error' | translate }}</span>
+          }
+        </div>
+
+        <div class="form-campo">
+          <label for="help-email">{{ 'help.contact.form.email-label' | translate }}</label>
+          <input
+            id="help-email"
+            type="email"
+            formControlName="email"
+            class="form-input"
+            [placeholder]="'help.contact.form.email-placeholder' | translate"
+          >
+          @if (contactForm.controls.email.invalid && contactForm.controls.email.touched) {
+            @if (contactForm.controls.email.errors?.['required']) {
+              <span class="form-error">{{ 'help.contact.form.required-error' | translate }}</span>
+            } @else if (contactForm.controls.email.errors?.['email']) {
+              <span class="form-error">{{ 'help.contact.form.email-invalid-error' | translate }}</span>
+            }
+          }
+        </div>
+
+        <div class="form-campo">
+          <label for="help-message">{{ 'help.contact.form.message-label' | translate }}</label>
+          <textarea
+            id="help-message"
+            formControlName="message"
+            class="form-input form-textarea"
+            rows="4"
+            [placeholder]="'help.contact.form.message-placeholder' | translate"
+          ></textarea>
+          @if (isInvalidControl('message')) {
+            <span class="form-error">{{ 'help.contact.form.required-error' | translate }}</span>
+          }
+        </div>
+
+        <button type="submit" class="form-submit">{{ 'help.contact.form.submit-button' | translate }}</button>
+      </form>
+    }
+  </section>
+</div>
