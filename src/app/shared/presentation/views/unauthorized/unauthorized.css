@@ -1,4 +1,4 @@
-.not-found {
+.unauthorized {
   min-height: 100vh;
   width: 100%;
   display: flex;
@@ -10,46 +10,39 @@
   gap: 8px;
 }
 
-.not-found-icon {
+.unauthorized-icon {
   font-size: 56px;
   width: 56px;
   height: 56px;
-  color: #3b82f6;
+  color: #f87171;
   margin-bottom: 8px;
 }
 
-.not-found-code {
-  margin: 0;
-  font-size: 64px;
-  font-weight: 700;
-  color: #f1f5f9;
-  line-height: 1;
-}
-
-.not-found-title {
-  margin: 4px 0 0;
-  font-size: 18px;
+.unauthorized-title {
+  margin: 0 0 4px;
+  font-size: 20px;
   font-weight: 600;
   color: #f1f5f9;
 }
 
-.not-found-description {
+.unauthorized-description {
   margin: 0 0 16px;
   font-size: 13.5px;
   color: #94a3b8;
+  max-width: 360px;
 }
 
-.not-found-button {
-  display: inline-block;
+.unauthorized-button {
   background: #1d4ed8;
   color: #fff;
-  text-decoration: none;
+  border: none;
   border-radius: 8px;
   padding: 10px 24px;
   font-size: 14px;
   font-weight: 600;
+  cursor: pointer;
 }
 
-.not-found-button:hover {
+.unauthorized-button:hover {
   background: #1e40af;
 }
