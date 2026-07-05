@@ -19,6 +19,7 @@ export interface InstallmentResource {
   finalInstallmentInitialBalance: number;
   finalInstallmentInterest: number;
   finalInstallmentAmortization: number;
+  finalInstallmentDesgravamenInsurance: number;
   finalInstallmentFinalBalance: number;
   totalCashOutflow: number;
 }

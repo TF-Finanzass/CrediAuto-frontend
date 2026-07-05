@@ -47,28 +47,29 @@ CreditOperationsResponse
   }
 
   private toInstallmentFromResource(r: InstallmentResource): Installment {
-  return {
-    number: r.number,
-    dueDate: new Date(r.dueDate),
-    periodType: r.periodType,
-    isGracePeriod: r.isGracePeriod,
-    initialBalance: r.initialBalance,
-    interest: r.interest,
-    amortization: r.amortization,
-    desgravamenInsurance: r.desgravamenInsurance,
-    installmentAmount: r.installmentAmount,
-    finalBalance: r.finalBalance,
-    riskInsurance: r.riskInsurance,
-    gps: r.gps,
-    postage: r.postage,
-    administrativeFee: r.administrativeFee,
-    finalInstallmentInitialBalance: r.finalInstallmentInitialBalance,
-    finalInstallmentInterest: r.finalInstallmentInterest,
-    finalInstallmentAmortization: r.finalInstallmentAmortization,
-    finalInstallmentFinalBalance: r.finalInstallmentFinalBalance,
-    totalCashOutflow: r.totalCashOutflow,
-  };
-}
+    return {
+      number: r.number,
+      dueDate: new Date(r.dueDate),
+      periodType: r.periodType,
+      isGracePeriod: r.isGracePeriod,
+      initialBalance: r.initialBalance,
+      interest: r.interest,
+      amortization: r.amortization,
+      desgravamenInsurance: r.desgravamenInsurance,
+      installmentAmount: r.installmentAmount,
+      finalBalance: r.finalBalance,
+      riskInsurance: r.riskInsurance,
+      gps: r.gps,
+      postage: r.postage,
+      administrativeFee: r.administrativeFee,
+      finalInstallmentInitialBalance: r.finalInstallmentInitialBalance,
+      finalInstallmentInterest: r.finalInstallmentInterest,
+      finalInstallmentAmortization: r.finalInstallmentAmortization,
+      finalInstallmentDesgravamenInsurance: r.finalInstallmentDesgravamenInsurance,
+      finalInstallmentFinalBalance: r.finalInstallmentFinalBalance,
+      totalCashOutflow: r.totalCashOutflow,
+    };
+  }
 
 toResourceFromEntity(entity: CreditOperation): CreditOperationResource {
   return {
@@ -110,6 +111,7 @@ toResourceFromEntity(entity: CreditOperation): CreditOperationResource {
       finalInstallmentInitialBalance: i.finalInstallmentInitialBalance,
       finalInstallmentInterest: i.finalInstallmentInterest,
       finalInstallmentAmortization: i.finalInstallmentAmortization,
+      finalInstallmentDesgravamenInsurance: i.finalInstallmentDesgravamenInsurance,
       finalInstallmentFinalBalance: i.finalInstallmentFinalBalance,
       totalCashOutflow: i.totalCashOutflow,
     })),

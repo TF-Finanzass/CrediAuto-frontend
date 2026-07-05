@@ -114,7 +114,13 @@ export class FrenchAmortizationService {
       const administrativeFee = input.periodicCharges.administrativeFee;
 
       const totalCashOutflow =
-        installmentAmount + riskInsurance + gps + postage + administrativeFee + finalAmortization;
+        installmentAmount +
+        (periodType === 'T' ? desgrav : 0) +
+        riskInsurance +
+        gps +
+        postage +
+        administrativeFee +
+        finalAmortization;
 
       schedule.push({
         number: k,
@@ -134,6 +140,7 @@ export class FrenchAmortizationService {
         finalInstallmentInitialBalance: finalInitial,
         finalInstallmentInterest: finalInterest,
         finalInstallmentAmortization: finalAmortization,
+        finalInstallmentDesgravamenInsurance: finalDesgrav,
         finalInstallmentFinalBalance: finalBalance,
         totalCashOutflow,
       });

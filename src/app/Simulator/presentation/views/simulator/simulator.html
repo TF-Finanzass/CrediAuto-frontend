@@ -74,7 +74,7 @@
           <mat-form-field appearance="outline">
             <mat-label>Capitalización</mat-label>
             <mat-select formControlName="capitalization">
-              @for (freq of frequencies; track freq) {
+              @for (freq of capitalizationFrequencies; track freq) {
                 <mat-option [value]="freq">{{ freq }}</mat-option>
               }
             </mat-select>

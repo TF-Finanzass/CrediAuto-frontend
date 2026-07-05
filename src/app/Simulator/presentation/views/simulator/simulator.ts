@@ -43,7 +43,8 @@ export class Simulator {
   configStore = inject(ConfigurationStore);
 
   rateTypes = Object.values(RateType);
-  frequencies = Object.values(PaymentFrequency);
+  frequencies = Object.values(PaymentFrequency).filter((f) => f !== PaymentFrequency.Diaria);
+  capitalizationFrequencies = Object.values(PaymentFrequency);
 
   result = signal<CreditSimulationResult | null>(null);
 
