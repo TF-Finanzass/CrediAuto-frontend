@@ -18,7 +18,7 @@
         <mat-form-field appearance="outline">
           <mat-label>{{ 'simulator.section.client-car.client-label' | translate }}</mat-label>
           <mat-select formControlName="clientId">
-            @for (client of clientsStore.clients(); track client.id) {
+            @for (client of approvedClients(); track client.id) {
               <mat-option [value]="client.id">{{ client.fullName }} {{ client.lastName }} — DNI {{ client.documentNumber }}</mat-option>
             }
           </mat-select>
@@ -27,7 +27,7 @@
         <mat-form-field appearance="outline">
           <mat-label>{{ 'simulator.section.client-car.car-label' | translate }}</mat-label>
           <mat-select formControlName="carId" (selectionChange)="onCarSelected($event.value)">
-            @for (car of carsStore.cars(); track car.id) {
+            @for (car of availableCars(); track car.id) {
               <mat-option [value]="car.id">{{ car.brand }} {{ car.model }} {{ car.year }} — {{ currencySymbol[car.currency] }} {{ car.price | number }}</mat-option>
             }
           </mat-select>

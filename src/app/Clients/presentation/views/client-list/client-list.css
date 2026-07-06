@@ -84,6 +84,21 @@
   color: #f87171;
 }
 
+.status-aprobado {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+}
+
+.status-pendiente {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+}
+
+.status-rechazado {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+}
+
 ::ng-deep .table-card .mat-mdc-table {
   background: transparent;
 }

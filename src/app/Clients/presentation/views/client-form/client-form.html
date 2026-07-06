@@ -1,5 +1,5 @@
 <div class="form-page">
-  <h1 class="title">{{ 'client.new-title' | translate }}</h1>
+  <h1 class="title">{{ (isEditMode ? 'client.edit-title' : 'client.new-title') | translate }}</h1>
 
   <div class="form-card">
     <form [formGroup]="form" (ngSubmit)="submit()">
@@ -15,10 +15,13 @@
       <mat-form-field appearance="outline">
         <mat-label>{{ 'client.last-name' | translate }}</mat-label>
         <input matInput formControlName="lastName" required>
+        @if (form.get('lastName')!.touched && form.get('lastName')!.hasError('required')) {
+          <mat-error>{{ 'client.error.last-name-required' | translate }}</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field appearance="outline">
-        <mat-label>{{ 'client.document' | translate }}</mat-label>
+        <mat-label>{{ 'client.document-number' | translate }}</mat-label>
         <input matInput formControlName="documentNumber" required>
       </mat-form-field>
 
@@ -55,7 +58,7 @@
           {{ 'client.back' | translate }}
         </button>
         <button mat-raised-button color="primary" class="submit-btn" type="submit" [disabled]="form.invalid">
-          {{ 'client.create' | translate }}
+          {{ (isEditMode ? 'client.save' : 'client.create') | translate }}
         </button>
       </div>
     </form>

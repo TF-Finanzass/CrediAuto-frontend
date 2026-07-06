@@ -53,6 +53,21 @@ export class SchedulesStore {
       });
   }
 
+  deleteOperation(operation: CreditOperation): void {
+    this.loadingSignal.set(true);
+    this.errorSignal.set(null);
+    this.schedulesEndpoint.delete(operation.id).pipe(retry(2)).subscribe({
+      next: () => {
+        this.operationsSignal.update(ops => ops.filter(o => o.id !== operation.id));
+        this.loadingSignal.set(false);
+      },
+      error: err => {
+        this.errorSignal.set(this.formatError(err, 'Failed to delete operation'));
+        this.loadingSignal.set(false);
+      }
+    });
+  }
+
   private loadOperations(): void {
     this.loadingSignal.set(true);
     this.errorSignal.set(null);

@@ -19,6 +19,11 @@
     "sign-in": "Iniciar sesión",
     "sign-up": "Registrarse"
   },
+  "common": {
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "confirm": "Confirm"
+  },
   "dashboard": {
     "title": "Dashboard — CrediAuto",
     "metric": {
@@ -59,20 +64,28 @@
     "fuel-type": "Fuel type",
     "transmission": "Transmission",
     "status": "Status",
-    "new": "New vehicle"
+    "new": "New vehicle",
+    "actions": "Actions"
   },
   "car": {
     "new-title": "Register vehicle",
+    "edit-title": "Edit vehicle",
     "brand": "Brand",
     "model": "Model",
     "year": "Year",
     "price": "Price",
+    "currency": "Currency",
     "fuel-type": "Fuel type",
     "transmission": "Transmission",
     "detail": "Detail",
     "status": "Status",
     "create": "Register",
+    "save": "Save",
     "back": "Back",
+    "edit": "Edit",
+    "delete": "Delete",
+    "delete-title": "Delete vehicle",
+    "delete-confirm": "Delete {{brand}} {{model}}? This action cannot be undone.",
     "error": {
       "brand-required": "Brand is required",
       "model-required": "Model is required"
@@ -84,25 +97,36 @@
     "full-name": "First name",
     "last-name": "Last name",
     "document": "ID number",
+    "document-number": "ID number",
     "email": "Email",
     "phone": "Phone",
     "monthly-income": "Monthly income",
     "status": "Status",
-    "new": "New client"
+    "new": "New client",
+    "actions": "Actions"
   },
   "client": {
     "new-title": "Register client",
+    "edit-title": "Edit client",
     "full-name": "First name",
     "last-name": "Last name",
     "document": "ID number",
+    "document-number": "ID number",
     "email": "Email",
     "phone": "Phone",
     "monthly-income": "Monthly income",
     "status": "Status",
     "create": "Register",
+    "save": "Save",
     "back": "Back",
+    "edit": "Edit",
+    "delete": "Delete",
+    "delete-title": "Delete client",
+    "delete-confirm": "Delete {{fullName}} {{lastName}}? This action cannot be undone.",
+    "edit-hint": "Only first name, last name, email, and phone can be edited.",
     "error": {
       "full-name-required": "First name is required",
+      "last-name-required": "Last name is required",
       "email-invalid": "Email is not valid"
     }
   },
@@ -194,6 +218,9 @@
       "filter-all": "All clients",
       "view-button": "View schedule",
       "empty": "No operations registered yet.",
+      "delete": "Delete",
+      "delete-title": "Delete schedule",
+      "delete-confirm": "Delete this schedule? This action cannot be undone.",
       "column": {
         "client": "Client",
         "car": "Vehicle",

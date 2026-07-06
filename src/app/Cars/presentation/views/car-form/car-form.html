@@ -1,5 +1,5 @@
 <div class="form-page">
-  <h1 class="title">{{ 'car.new-title' | translate }}</h1>
+  <h1 class="title">{{ (isEditMode ? 'car.edit-title' : 'car.new-title') | translate }}</h1>
 
   <div class="form-card">
     <form [formGroup]="form" (ngSubmit)="submit()">
@@ -59,7 +59,7 @@
           {{ 'car.back' | translate }}
         </button>
         <button mat-raised-button color="primary" class="submit-btn" type="submit" [disabled]="form.invalid">
-          {{ 'car.create' | translate }}
+          {{ (isEditMode ? 'car.save' : 'car.create') | translate }}
         </button>
       </div>
     </form>

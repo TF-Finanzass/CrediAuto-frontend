@@ -70,7 +70,7 @@ export class IamStore {
     localStorage.removeItem('token');
   }
 
-  signIn(signInCommand: SignInCommand, router: Router) {
+  signIn(signInCommand: SignInCommand, router: Router, onError?: (message: string) => void) {
     this.iamApi.signIn(signInCommand).subscribe({
       next: (signInResource) => {
         const session: StoredSession = {
@@ -86,19 +86,29 @@ export class IamStore {
         this.currentRoleSignal.set(session.role);
         router.navigate(['/dashboard']).then();
       },
-      // ...
+      error: (err) => {
+        const message =
+          err?.status === 401 || err?.status === 400
+            ? 'Usuario o contraseña incorrectos'
+            : 'No se pudo iniciar sesión. Intenta nuevamente.';
+        onError?.(message);
+      },
     });
   }
 
-  signUp(signUpCommand: SignUpCommand, router: Router) {
+  signUp(
+    signUpCommand: SignUpCommand,
+    router: Router,
+    onSuccess?: () => void,
+    onError?: (message: string) => void,
+  ) {
     this.iamApi.signUp(signUpCommand).subscribe({
-      next: (signUpResource) => {
-        console.log('Sign-up successful:', signUpResource);
+      next: () => {
+        onSuccess?.();
         router.navigate(['/sign-in']).then();
       },
-      error: (err) => {
-        console.error('Sign-up failed:', err);
-        router.navigate(['/sign-up']).then();
+      error: () => {
+        onError?.('No se pudo crear la cuenta. Intenta nuevamente.');
       },
     });
   }

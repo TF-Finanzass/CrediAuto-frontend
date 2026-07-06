@@ -1,4 +1,4 @@
-import { Component, effect, inject, signal } from '@angular/core';
+import { Component, computed, effect, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -9,7 +9,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { DecimalPipe } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ClientsStore } from '../../../../Clients/application/clients.store';
+import { ClientStatus } from '../../../../Clients/domain/model/client.entity';
 import { CarsStore } from '../../../../Cars/application/cars.store';
+import { CarStatus } from '../../../../Cars/domain/model/car.entity';
 import { FrenchAmortizationService } from '../../../application/services/french-amortization.service';
 import { CreditSimulationResult } from '../../../domain/model/installment';
 import { RateType } from '../../../domain/model/rate-type';
@@ -34,7 +36,6 @@ import { Currency, currencySymbol } from '../../../../Configuration/domain/model
   templateUrl: './simulator.html',
   styleUrl: './simulator.css',
 })
-
 export class Simulator {
   private fb = inject(FormBuilder);
   private amortizationService = inject(FrenchAmortizationService);
@@ -49,6 +50,14 @@ export class Simulator {
   capitalizationFrequencies = Object.values(PaymentFrequency);
 
   result = signal<CreditSimulationResult | null>(null);
+
+  approvedClients = computed(() =>
+    this.clientsStore.clients().filter((c) => c.status === ClientStatus.Aprobado),
+  );
+
+  availableCars = computed(() =>
+    this.carsStore.cars().filter((c) => c.status === CarStatus.Disponible),
+  );
 
   protected readonly currencySymbol = currencySymbol;
   selectedCarCurrency = signal<Currency | null>(null);

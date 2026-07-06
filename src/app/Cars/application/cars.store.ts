@@ -40,6 +40,40 @@ export class CarsStore {
     });
   }
 
+  updateCar(id: number, car: Car): void {
+    this.loadingSignal.set(true);
+    this.errorSignal.set(null);
+    this.carsEndpoint.update(car, id).pipe(retry(2)).subscribe({
+      next: updatedCar => {
+        this.carsSignal.update(cars => cars.map(c => c.id === id ? updatedCar : c));
+        this.loadingSignal.set(false);
+      },
+      error: err => {
+        this.errorSignal.set(this.formatError(err, 'Failed to update car'));
+        this.loadingSignal.set(false);
+      }
+    });
+  }
+
+  deleteCar(car: Car): void {
+    this.loadingSignal.set(true);
+    this.errorSignal.set(null);
+    this.carsEndpoint.delete(car.id).pipe(retry(2)).subscribe({
+      next: () => {
+        this.carsSignal.update(cars => cars.filter(c => c.id !== car.id));
+        this.loadingSignal.set(false);
+      },
+      error: err => {
+        this.errorSignal.set(this.formatError(err, 'Failed to delete car'));
+        this.loadingSignal.set(false);
+      }
+    });
+  }
+
+  getCarById(id: number) {
+    return this.carsEndpoint.getById(id);
+  }
+
   private loadCars(): void {
     this.loadingSignal.set(true);
     this.errorSignal.set(null);
