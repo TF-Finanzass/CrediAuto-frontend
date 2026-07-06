@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core';
-import { CreditSimulationInput, CreditSimulationResult, Installment, InstallmentPeriodType } from '../../domain/model/installment';
+import {
+  CreditSimulationInput,
+  CreditSimulationResult,
+  Installment,
+  InstallmentPeriodType,
+} from '../../domain/model/installment';
 import { RateType } from '../../domain/model/rate-type';
 import { monthsPerPeriod, periodsPerYear } from '../../domain/model/payment-frequency';
 import { sumInitialCosts } from '../../domain/model/initial-costs';
@@ -13,7 +18,8 @@ export class FrenchAmortizationService {
     const downPaymentAmount = input.vehiclePrice * (input.downPaymentPercent / 100);
     const initialCostsTotal = sumInitialCosts(input.initialCosts);
     const loanAmount = input.vehiclePrice - downPaymentAmount + initialCostsTotal;
-    const finalInstallmentPercent = input.finalInstallmentPercent ?? defaultFinalInstallmentPercent(input.termMonths);
+    const finalInstallmentPercent =
+      input.finalInstallmentPercent ?? defaultFinalInstallmentPercent(input.termMonths);
     const finalInstallmentAmount = input.vehiclePrice * (finalInstallmentPercent / 100);
     const totalPeriods = Math.round(input.termMonths / monthsPerPmt); // N
     const graceTotalPeriods = Math.round(input.graceTotalMonths / monthsPerPmt); // T
@@ -22,12 +28,16 @@ export class FrenchAmortizationService {
     const tea = this.computeTEA(input);
     const i = Math.pow(1 + tea, 1 / paymentFreq) - 1; // TEM: tasa efectiva del periodo de pago
     const desgravamenPeriodRate = (input.desgravamenInsurancePercent / 100) * monthsPerPmt;
-    const riskInsurancePerPeriod = ((input.riskInsurancePercent / 100) * input.vehiclePrice) / paymentFreq;
-    const netFinancedBalance = loanAmount - finalInstallmentAmount / Math.pow(1 + i + desgravamenPeriodRate, totalPeriods + 1);
+    const riskInsurancePerPeriod =
+      ((input.riskInsurancePercent / 100) * input.vehiclePrice) / paymentFreq;
+    const netFinancedBalance =
+      loanAmount -
+      finalInstallmentAmount / Math.pow(1 + i + desgravamenPeriodRate, totalPeriods + 1);
     const schedule: Installment[] = [];
 
     let currentDate = input.startDate ?? new Date();
-    let finalBalance = finalInstallmentAmount / Math.pow(1 + i + desgravamenPeriodRate, totalPeriods + 1);
+    let finalBalance =
+      finalInstallmentAmount / Math.pow(1 + i + desgravamenPeriodRate, totalPeriods + 1);
     let balance = netFinancedBalance;
     let serviceCuota: number | null = null; // se fija una sola vez al iniciar la fase de servicio
 
@@ -85,7 +95,14 @@ export class FrenchAmortizationService {
       const gps = input.periodicCharges.gps;
       const postage = input.periodicCharges.postage;
       const administrativeFee = input.periodicCharges.administrativeFee;
-      const totalCashOutflow = installmentAmount + (periodType === 'T' ? desgrav : 0) + riskInsurance + gps + postage + administrativeFee + finalAmortization;
+      const totalCashOutflow =
+        installmentAmount +
+        (periodType === 'T' ? desgrav : 0) +
+        riskInsurance +
+        gps +
+        postage +
+        administrativeFee +
+        finalAmortization;
 
       schedule.push({
         number: k,
@@ -115,8 +132,12 @@ export class FrenchAmortizationService {
     const discountRateAnnual = input.discountRate / 100;
     const periodicDiscountRate = Math.pow(1 + discountRateAnnual, 1 / paymentFreq) - 1;
     const van = this.computeNPV(cashFlows, periodicDiscountRate);
+
+    // TIR periódico real (la tasa que hace VAN = 0, en la unidad del periodo de pago)
     const periodicTIR = this.computeIRR(cashFlows);
-    const tir = Math.pow(1 + periodicTIR, paymentFreq) - 1;
+
+    // TCEA: TIR periódico anualizado (Tasa de Costo Efectivo Anual)
+    const tcea = Math.pow(1 + periodicTIR, paymentFreq) - 1;
 
     return {
       downPaymentAmount,
@@ -132,7 +153,8 @@ export class FrenchAmortizationService {
       gracePartialPeriods,
       schedule,
       van,
-      tir,
+      tir: periodicTIR, // TIR real, tasa periódica (ej. mensual)
+      tcea, // Tasa de Costo Efectivo Anual (antes se confundía con "tir")
       discountRate: discountRateAnnual,
     };
   }

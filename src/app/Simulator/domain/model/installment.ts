@@ -63,5 +63,6 @@ export interface CreditSimulationResult {
   schedule: Installment[];
   van: number;
   tir: number;
+  tcea: number;
   discountRate: number;
 }
