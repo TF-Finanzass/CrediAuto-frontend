@@ -1,6 +1,6 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CarsStore } from '../../../application/cars.store';
 import { Car, CarStatus } from '../../../domain/model/car.entity';
 import { Currency } from '../../../../Configuration/domain/model/currency';
@@ -25,24 +25,21 @@ import { TranslatePipe } from '@ngx-translate/core';
   templateUrl: './car-form.html',
   styleUrl: './car-form.css',
 })
-
-export class CarForm {
+export class CarForm implements OnInit {
   private fb = inject(FormBuilder);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
   private store = inject(CarsStore);
 
   statuses = Object.values(CarStatus);
   currencies = Object.values(Currency);
 
+  carId: number | null = null;
+  isEditMode = false;
+
   form = this.fb.group({
-    brand: new FormControl<string>('', {
-      nonNullable: true,
-      validators: [Validators.required],
-    }),
-    model: new FormControl<string>('', {
-      nonNullable: true,
-      validators: [Validators.required],
-    }),
+    brand: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
+    model: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
     year: new FormControl<number>(new Date().getFullYear(), {
       nonNullable: true,
       validators: [Validators.required, Validators.min(1990)],
@@ -55,21 +52,37 @@ export class CarForm {
       nonNullable: true,
       validators: [Validators.required],
     }),
-    detail: new FormControl<string>('', {
-      nonNullable: true,
-      validators: [Validators.required],
-    }),
+    detail: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
     status: new FormControl<CarStatus>(CarStatus.Disponible, {
       nonNullable: true,
       validators: [Validators.required],
     }),
   });
 
+  ngOnInit() {
+    const idParam = this.route.snapshot.paramMap.get('id');
+    if (idParam) {
+      this.carId = Number(idParam);
+      this.isEditMode = true;
+      this.store.getCarById(this.carId).subscribe((car) => {
+        this.form.patchValue({
+          brand: car.brand,
+          model: car.model,
+          year: car.year,
+          price: car.price,
+          currency: car.currency,
+          detail: car.detail,
+          status: car.status,
+        });
+      });
+    }
+  }
+
   submit() {
     if (this.form.invalid) return;
 
     const car: Car = new Car({
-      id: 0,
+      id: this.carId ?? 0,
       brand: this.form.value.brand!,
       model: this.form.value.model!,
       year: this.form.value.year!,
@@ -79,7 +92,11 @@ export class CarForm {
       status: this.form.value.status!,
     });
 
-    this.store.addCar(car);
+    if (this.isEditMode && this.carId !== null) {
+      this.store.updateCar(this.carId, car);
+    } else {
+      this.store.addCar(car);
+    }
     this.router.navigate(['cars']).then();
   }
 

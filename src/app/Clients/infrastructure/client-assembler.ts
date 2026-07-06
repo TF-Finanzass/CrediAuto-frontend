@@ -1,10 +1,10 @@
-import {BaseAssembler} from '../../shared/infrastructure/base-assembler';
-import {Client, ClientStatus} from '../domain/model/client.entity';
-import {ClientResource, ClientsResponse} from './clients-response';
+import { BaseAssembler } from '../../shared/infrastructure/base-assembler';
+import { Client, ClientStatus } from '../domain/model/client.entity';
+import { ClientResource, ClientsResponse } from './clients-response';
 
 export class ClientAssembler implements BaseAssembler<Client, ClientResource, ClientsResponse> {
   toEntitiesFromResponse(response: ClientsResponse): Client[] {
-    return response.clients.map(resource => this.toEntityFromResource(resource as ClientResource));
+    return response.map((resource) => this.toEntityFromResource(resource));
   }
 
   toEntityFromResource(resource: ClientResource): Client {
@@ -16,7 +16,8 @@ export class ClientAssembler implements BaseAssembler<Client, ClientResource, Cl
       email: resource.email,
       phone: resource.phone,
       monthlyIncome: resource.monthlyIncome,
-      status: resource.status as ClientStatus
+      userId: resource.userId,
+      status: resource.status as ClientStatus,
     });
   }
 
@@ -29,7 +30,8 @@ export class ClientAssembler implements BaseAssembler<Client, ClientResource, Cl
       email: entity.email,
       phone: entity.phone,
       monthlyIncome: entity.monthlyIncome,
-      status: entity.status
+      userId: entity.userId,
+      status: entity.status,
     } as ClientResource;
   }
 }

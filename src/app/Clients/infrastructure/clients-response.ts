@@ -1,4 +1,4 @@
-import {BaseResource, BaseResponse} from '../../shared/infrastructure/base-response';
+import { BaseResource } from '../../shared/infrastructure/base-response';
 
 export interface ClientResource extends BaseResource {
   id: number;
@@ -8,9 +8,8 @@ export interface ClientResource extends BaseResource {
   email: string;
   phone: string;
   monthlyIncome: number;
+  userId: number;
   status: string;
 }
 
-export interface ClientsResponse extends BaseResponse {
-  clients: ClientResource[];
-}
+export type ClientsResponse = ClientResource[];

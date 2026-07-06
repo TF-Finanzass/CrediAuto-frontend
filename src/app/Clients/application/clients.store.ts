@@ -1,11 +1,11 @@
-import {computed, Injectable, signal} from '@angular/core';
-import {Client} from '../domain/model/client.entity';
-import {HttpClient} from '@angular/common/http';
-import {ClientsApiEndpoint} from '../infrastructure/clients-api-endpoint';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {retry} from 'rxjs';
+import { computed, Injectable, signal } from '@angular/core';
+import { Client } from '../domain/model/client.entity';
+import { HttpClient } from '@angular/common/http';
+import { ClientsApiEndpoint } from '../infrastructure/clients-api-endpoint';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { retry } from 'rxjs';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class ClientsStore {
   private readonly clientsEndpoint: ClientsApiEndpoint;
 
@@ -28,36 +28,84 @@ export class ClientsStore {
   addClient(client: Client): void {
     this.loadingSignal.set(true);
     this.errorSignal.set(null);
-    this.clientsEndpoint.create(client).pipe(retry(2)).subscribe({
-      next: createdClient => {
-        this.clientsSignal.update(clients => [...clients, createdClient]);
-        this.loadingSignal.set(false);
-      },
-      error: err => {
-        this.errorSignal.set(this.formatError(err, 'Failed to create client'));
-        this.loadingSignal.set(false);
-      }
-    });
+    this.clientsEndpoint
+      .create(client)
+      .pipe(retry(2))
+      .subscribe({
+        next: (created) => {
+          this.clientsSignal.update((clients) => [...clients, created]);
+          this.loadingSignal.set(false);
+        },
+        error: (err) => {
+          this.errorSignal.set(this.formatError(err, 'Failed to create client'));
+          this.loadingSignal.set(false);
+        },
+      });
+  }
+
+  updateClient(id: number, client: Client): void {
+    this.loadingSignal.set(true);
+    this.errorSignal.set(null);
+    this.clientsEndpoint
+      .update(client, id)
+      .pipe(retry(2))
+      .subscribe({
+        next: (updated) => {
+          this.clientsSignal.update((clients) => clients.map((c) => (c.id === id ? updated : c)));
+          this.loadingSignal.set(false);
+        },
+        error: (err) => {
+          this.errorSignal.set(this.formatError(err, 'Failed to update client'));
+          this.loadingSignal.set(false);
+        },
+      });
+  }
+
+  deleteClient(client: Client): void {
+    this.loadingSignal.set(true);
+    this.errorSignal.set(null);
+    this.clientsEndpoint
+      .delete(client.id)
+      .pipe(retry(2))
+      .subscribe({
+        next: () => {
+          this.clientsSignal.update((clients) => clients.filter((c) => c.id !== client.id));
+          this.loadingSignal.set(false);
+        },
+        error: (err) => {
+          this.errorSignal.set(this.formatError(err, 'Failed to delete client'));
+          this.loadingSignal.set(false);
+        },
+      });
+  }
+
+  getClientById(id: number) {
+    return this.clientsEndpoint.getById(id);
   }
 
   private loadClients(): void {
     this.loadingSignal.set(true);
     this.errorSignal.set(null);
-    this.clientsEndpoint.getAll().pipe(takeUntilDestroyed()).subscribe({
-      next: clients => {
-        this.clientsSignal.set(clients);
-        this.loadingSignal.set(false);
-      },
-      error: err => {
-        this.errorSignal.set(this.formatError(err, 'Failed to load clients'));
-        this.loadingSignal.set(false);
-      }
-    });
+    this.clientsEndpoint
+      .getAll()
+      .pipe(takeUntilDestroyed())
+      .subscribe({
+        next: (clients) => {
+          this.clientsSignal.set(clients);
+          this.loadingSignal.set(false);
+        },
+        error: (err) => {
+          this.errorSignal.set(this.formatError(err, 'Failed to load clients'));
+          this.loadingSignal.set(false);
+        },
+      });
   }
 
   private formatError(error: any, fallback: string): string {
     if (error instanceof Error) {
-      return error.message.includes('Resource not found') ? `${fallback}: Not found` : error.message;
+      return error.message.includes('Resource not found')
+        ? `${fallback}: Not found`
+        : error.message;
     }
     return fallback;
   }

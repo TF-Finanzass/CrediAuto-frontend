@@ -10,6 +10,13 @@
 
     <h2 class="auth-title">Iniciar sesión</h2>
 
+    @if (errorMessage()) {
+      <div class="auth-banner-error">
+        <mat-icon>error_outline</mat-icon>
+        {{ errorMessage() }}
+      </div>
+    }
+
     <form [formGroup]="form" (submit)="performSignIn()" class="auth-form">
       <div class="campo">
         <label for="username">Usuario</label>

@@ -19,6 +19,11 @@
     "sign-in": "Sign-In",
     "sign-up": "Sign-Up"
   },
+  "common": {
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "confirm": "Confirmar"
+  },
   "dashboard": {
     "title": "Dashboard — CrediAuto",
     "metric": {
@@ -59,20 +64,28 @@
     "fuel-type": "Combustible",
     "transmission": "Transmisión",
     "status": "Estado",
-    "new": "Nuevo vehículo"
+    "new": "Nuevo vehículo",
+    "actions": "Acciones"
   },
   "car": {
     "new-title": "Registrar vehículo",
+    "edit-title": "Editar vehículo",
     "brand": "Marca",
     "model": "Modelo",
     "year": "Año",
     "price": "Precio",
+    "currency": "Moneda",
     "fuel-type": "Combustible",
     "transmission": "Transmisión",
     "detail": "Detalle",
     "status": "Estado",
     "create": "Registrar",
+    "save": "Guardar",
     "back": "Volver",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "delete-title": "Eliminar vehículo",
+    "delete-confirm": "¿Eliminar {{brand}} {{model}}? Esta acción no se puede deshacer.",
     "error": {
       "brand-required": "La marca es obligatoria",
       "model-required": "El modelo es obligatorio"
@@ -84,25 +97,36 @@
     "full-name": "Nombres",
     "last-name": "Apellidos",
     "document": "DNI",
+    "document-number": "DNI",
     "email": "Correo",
     "phone": "Teléfono",
     "monthly-income": "Ingreso mensual",
     "status": "Estado",
-    "new": "Nuevo cliente"
+    "new": "Nuevo cliente",
+    "actions": "Acciones"
   },
   "client": {
     "new-title": "Registrar cliente",
+    "edit-title": "Editar cliente",
     "full-name": "Nombres",
     "last-name": "Apellidos",
     "document": "DNI",
+    "document-number": "DNI",
     "email": "Correo",
     "phone": "Teléfono",
     "monthly-income": "Ingreso mensual",
     "status": "Estado",
     "create": "Registrar",
+    "save": "Guardar",
     "back": "Volver",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "delete-title": "Eliminar cliente",
+    "delete-confirm": "¿Eliminar a {{fullName}} {{lastName}}? Esta acción no se puede deshacer.",
+    "edit-hint": "Solo se pueden editar nombres, apellidos, correo y teléfono.",
     "error": {
       "full-name-required": "El nombre es obligatorio",
+      "last-name-required": "El apellido es obligatorio",
       "email-invalid": "El correo no es válido"
     }
   },
@@ -194,6 +218,9 @@
       "filter-all": "Todos los clientes",
       "view-button": "Ver cronograma",
       "empty": "No hay operaciones registradas todavía.",
+      "delete": "Eliminar",
+      "delete-title": "Eliminar cronograma",
+      "delete-confirm": "¿Eliminar el cronograma? Esta acción no se puede deshacer.",
       "column": {
         "client": "Cliente",
         "car": "Vehículo",
