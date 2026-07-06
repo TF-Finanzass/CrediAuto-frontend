@@ -22,12 +22,51 @@
       <div class="campo">
         <label for="password">Contraseña</label>
         <input type="password" id="password" name="password" formControlName="password" class="auth-input">
-        @if (isInvalidControl(form,'password')) {
+
+        @if (form.controls.password.value) {
+          <div class="password-strength">
+            <div class="strength-bar">
+              <div
+                class="strength-fill"
+                [class]="'strength-' + passwordLevel()"
+                [style.width.%]="(passwordScore() / 5) * 100">
+              </div>
+            </div>
+            <span class="strength-label" [class]="'strength-text-' + passwordLevel()">
+              {{ passwordLevelLabel() }}
+            </span>
+          </div>
+
+          <ul class="password-requirements">
+            <li [class.met]="passwordRequirements().minLength">
+              <mat-icon>{{ passwordRequirements().minLength ? 'check_circle' : 'radio_button_unchecked' }}</mat-icon>
+              Mínimo 8 caracteres
+            </li>
+            <li [class.met]="passwordRequirements().hasUpperCase">
+              <mat-icon>{{ passwordRequirements().hasUpperCase ? 'check_circle' : 'radio_button_unchecked' }}</mat-icon>
+              Una letra mayúscula
+            </li>
+            <li [class.met]="passwordRequirements().hasLowerCase">
+              <mat-icon>{{ passwordRequirements().hasLowerCase ? 'check_circle' : 'radio_button_unchecked' }}</mat-icon>
+              Una letra minúscula
+            </li>
+            <li [class.met]="passwordRequirements().hasNumber">
+              <mat-icon>{{ passwordRequirements().hasNumber ? 'check_circle' : 'radio_button_unchecked' }}</mat-icon>
+              Un número
+            </li>
+            <li [class.met]="passwordRequirements().hasSpecialChar">
+              <mat-icon>{{ passwordRequirements().hasSpecialChar ? 'check_circle' : 'radio_button_unchecked' }}</mat-icon>
+              Un carácter especial
+            </li>
+          </ul>
+        }
+
+        @if (isInvalidControl(form,'password') && !form.controls.password.value) {
           <span class="auth-error">{{ errorMessagesForControl(form,'password') }}</span>
         }
       </div>
 
-      <button type="submit" class="auth-submit">Crear cuenta</button>
+      <button type="submit" class="auth-submit" [disabled]="form.invalid">Crear cuenta</button>
     </form>
 
     <p class="auth-secondary">
