@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
-  platformProviderApiBaseUrl: 'http://localhost:8080/api/v1',
+  platformProviderApiBaseUrl: 'https://crediauto-backend.onrender.com/api/v1',
   platformProviderCarsEndpointPath: '/car',
   platformProviderClientsEndpointPath: '/client',
   platformProviderCreditOperationsEndpointPath: '/credit-operation',
